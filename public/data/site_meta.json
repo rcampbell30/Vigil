@@ -1,0 +1,9 @@
+{
+  "generated_at": "2026-05-12T02:26:41.096370",
+  "generated_date": "12 May 2026",
+  "source": "NASA Exoplanet Archive \u2014 6,232 confirmed planets",
+  "total_planets_scanned": 6232,
+  "rankable_candidates": 281,
+  "candidates_exported": 100,
+  "scoring_model_version": "Evidence-adjusted v2"
+}
