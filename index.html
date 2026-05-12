@@ -8,65 +8,39 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet"/>
   <style>
-    /* ── Reset & base ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #070b12;
-      --bg2:       #0d1420;
-      --bg3:       #111c2e;
-      --border:    #1e2e44;
-      --text:      #c4d0e3;
-      --text-dim:  #566880;
-      --teal:      #3af7b5;
-      --amber:     #ff8c42;
-      --red:       #f75a3a;
-      --white:     #e8eef8;
+      --bg:#070b12; --bg2:#0d1420; --bg3:#111c2e; --border:#1e2e44;
+      --text:#c4d0e3; --text-dim:#566880; --teal:#3af7b5;
+      --amber:#ff8c42; --red:#f75a3a; --white:#e8eef8;
     }
 
     html { scroll-behavior: smooth; }
-
     body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 14px;
-      line-height: 1.6;
-      min-height: 100vh;
-      overflow-x: hidden;
+      background: var(--bg); color: var(--text);
+      font-family: 'JetBrains Mono', monospace; font-size: 14px;
+      line-height: 1.6; min-height: 100vh; overflow-x: hidden;
     }
 
-    /* ── Starfield ── */
     #stars {
       position: fixed; inset: 0; z-index: 0; pointer-events: none;
       background:
         radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,.55) 0%, transparent 100%),
         radial-gradient(1px 1px at 23% 67%, rgba(255,255,255,.45) 0%, transparent 100%),
-        radial-gradient(1px 1px at 38% 32%, rgba(255,255,255,.6)  0%, transparent 100%),
-        radial-gradient(1px 1px at 52% 80%, rgba(255,255,255,.4)  0%, transparent 100%),
+        radial-gradient(1px 1px at 38% 32%, rgba(255,255,255,.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 52% 80%, rgba(255,255,255,.4) 0%, transparent 100%),
         radial-gradient(1px 1px at 67% 20%, rgba(255,255,255,.55) 0%, transparent 100%),
-        radial-gradient(1px 1px at 79% 55%, rgba(255,255,255,.5)  0%, transparent 100%),
-        radial-gradient(1px 1px at 88% 8%,  rgba(255,255,255,.65) 0%, transparent 100%),
-        radial-gradient(1px 1px at 95% 75%, rgba(255,255,255,.4)  0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 5%  90%, rgba(255,255,255,.35) 0%, transparent 100%),
-        radial-gradient(1px 1px at 44% 48%, rgba(255,255,255,.5)  0%, transparent 100%),
-        radial-gradient(1px 1px at 17% 40%, rgba(255,255,255,.3)  0%, transparent 100%),
-        radial-gradient(1px 1px at 61% 62%, rgba(255,255,255,.45) 0%, transparent 100%),
-        radial-gradient(1px 1px at 82% 33%, rgba(255,255,255,.5)  0%, transparent 100%),
-        radial-gradient(1px 1px at 30% 88%, rgba(255,255,255,.35) 0%, transparent 100%),
-        radial-gradient(2px 2px at 70% 10%, rgba(180,220,255,.4)  0%, transparent 100%),
-        radial-gradient(1px 1px at 55% 5%,  rgba(255,255,255,.6)  0%, transparent 100%),
+        radial-gradient(1px 1px at 79% 55%, rgba(255,255,255,.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 88% 8%, rgba(255,255,255,.65) 0%, transparent 100%),
+        radial-gradient(1px 1px at 95% 75%, rgba(255,255,255,.4) 0%, transparent 100%),
         var(--bg);
     }
 
-    /* ── Layout wrapper ── */
-    .wrapper { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .wrapper { position: relative; z-index: 1; max-width: 930px; margin: 0 auto; padding: 0 1.5rem 4rem; }
 
-    /* ── Header ── */
     header {
-      padding: 5rem 0 3rem;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 3rem;
+      padding: 5rem 0 3rem; border-bottom: 1px solid var(--border); margin-bottom: 3rem;
     }
 
     .header-eyebrow {
@@ -75,208 +49,128 @@
     }
 
     h1 {
-      font-family: 'Libre Baskerville', serif;
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 700; color: var(--white);
-      line-height: 1.1; margin-bottom: 1.25rem;
+      font-family: 'Libre Baskerville', serif; font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700; color: var(--white); line-height: 1.1; margin-bottom: 1.25rem;
     }
-
     h1 em { font-style: italic; color: var(--teal); }
 
     .header-desc {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 1rem; color: var(--text);
-      max-width: 620px; line-height: 1.8;
-      margin-bottom: 2rem;
+      font-family: 'Libre Baskerville', serif; font-size: 1rem;
+      max-width: 660px; line-height: 1.8; margin-bottom: 2rem;
     }
 
     .header-meta {
-      display: flex; flex-wrap: wrap; gap: 2rem;
-      font-size: 11px; letter-spacing: .12em;
-      text-transform: uppercase; color: var(--text-dim);
+      display: flex; flex-wrap: wrap; gap: 1.5rem;
+      font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-dim);
     }
-
-    .header-meta span { display: flex; align-items: center; gap: .5rem; }
     .header-meta strong { color: var(--teal); }
 
-    /* ── Section title ── */
     .section-title {
-      font-family: 'Libre Baskerville', serif;
-      font-size: .8rem; letter-spacing: .18em;
-      text-transform: uppercase; color: var(--text-dim);
-      margin-bottom: 1.5rem;
+      font-family: 'Libre Baskerville', serif; font-size: .8rem; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--text-dim); margin-bottom: 1.5rem;
       display: flex; align-items: center; gap: 1rem;
     }
-    .section-title::after {
-      content: ''; flex: 1; height: 1px; background: var(--border);
-    }
+    .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-    /* ── Planet cards ── */
     .cards { display: flex; flex-direction: column; gap: 1.25rem; }
-
     .card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
+      background: var(--bg2); border: 1px solid var(--border);
       border-left: 3px solid var(--rank-color, var(--teal));
-      border-radius: 4px;
-      display: flex; align-items: stretch;
-      transition: border-color .2s, box-shadow .2s;
-      animation: fadeUp .5s ease both;
+      border-radius: 4px; display: flex; align-items: stretch;
+      transition: border-color .2s, box-shadow .2s; animation: fadeUp .5s ease both;
     }
-
-    .card:hover {
-      box-shadow: 0 0 30px rgba(58,247,181,.07);
-      border-color: var(--rank-color, var(--teal));
-    }
+    .card:hover { box-shadow: 0 0 30px rgba(58,247,181,.07); border-color: var(--rank-color, var(--teal)); }
 
     @keyframes fadeUp {
       from { opacity:0; transform: translateY(12px); }
-      to   { opacity:1; transform: translateY(0); }
+      to { opacity:1; transform: translateY(0); }
     }
 
-    /* Stagger card animations */
-    .card:nth-child(1)  { animation-delay: .05s; }
-    .card:nth-child(2)  { animation-delay: .10s; }
-    .card:nth-child(3)  { animation-delay: .15s; }
-    .card:nth-child(4)  { animation-delay: .20s; }
-    .card:nth-child(5)  { animation-delay: .25s; }
-    .card:nth-child(6)  { animation-delay: .30s; }
-    .card:nth-child(7)  { animation-delay: .35s; }
-    .card:nth-child(8)  { animation-delay: .40s; }
-    .card:nth-child(9)  { animation-delay: .45s; }
-    .card:nth-child(10) { animation-delay: .50s; }
-
     .card-rank {
-      width: 56px; min-width: 56px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.6rem; font-weight: 700;
-      color: var(--border);
-      border-right: 1px solid var(--border);
-      user-select: none;
+      width: 56px; min-width: 56px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; font-weight: 700; color: var(--border); border-right: 1px solid var(--border);
     }
 
     .card-body { flex: 1; padding: 1.25rem 1.5rem; }
-
-    .card-header {
-      display: flex; align-items: flex-start;
-      justify-content: space-between; gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
+    .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+    .rank-type { font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--teal); margin-bottom: .25rem; }
     .planet-name {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 1.3rem; color: var(--white);
-      font-weight: 700; margin-bottom: .2rem;
+      font-family: 'Libre Baskerville', serif; font-size: 1.3rem;
+      color: var(--white); font-weight: 700; margin-bottom: .2rem;
+    }
+    .planet-meta { font-size: 11px; color: var(--text-dim); letter-spacing: .05em; }
+
+    .badges { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .6rem; }
+    .badge {
+      font-size: 9px; color: #f7c948; border: 1px solid #473b20;
+      background: rgba(247,201,72,.06); border-radius: 999px; padding: .15rem .45rem;
+      letter-spacing: .04em;
     }
 
-    .planet-meta {
-      font-size: 11px; color: var(--text-dim);
-      letter-spacing: .05em;
-    }
-
-    .missing {
-      font-size: 10px; color: #6a4e35;
-      margin-top: .3rem; letter-spacing: .04em;
-    }
-
-    /* Composite gauge */
     .composite-gauge { text-align: center; flex-shrink: 0; }
     .composite-gauge svg { display: block; }
     .gauge-label {
-      font-size: 9px; letter-spacing: .14em;
-      text-transform: uppercase; color: var(--text-dim);
-      margin-top: .2rem;
+      font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--text-dim); margin-top: .2rem;
     }
 
-    /* Score bars */
-    .score-bars { display: flex; flex-direction: column; gap: .45rem; }
+    .score-summary {
+      display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: .9rem;
+      font-size: 10px; color: var(--text-dim); letter-spacing: .08em; text-transform: uppercase;
+    }
+    .score-summary strong { color: var(--white); }
 
+    .score-bars { display: flex; flex-direction: column; gap: .45rem; }
     .score-row {
-      display: grid;
-      grid-template-columns: 140px 1fr 38px;
+      display: grid; grid-template-columns: 160px 1fr 42px;
       align-items: center; gap: .6rem;
     }
-
     .score-label {
-      font-size: 10px; letter-spacing: .06em;
-      text-transform: uppercase; color: var(--text-dim);
-      white-space: nowrap;
+      font-size: 10px; letter-spacing: .06em; text-transform: uppercase;
+      color: var(--text-dim); white-space: nowrap;
     }
-
-    .bar-track {
-      height: 5px; background: var(--bg3);
-      border-radius: 3px; overflow: hidden;
-    }
-
+    .bar-track { height: 5px; background: var(--bg3); border-radius: 3px; overflow: hidden; }
     .bar-fill {
       height: 100%; border-radius: 3px;
       transition: width 1s cubic-bezier(.22,1,.36,1);
       animation: growBar 1.2s cubic-bezier(.22,1,.36,1) both;
     }
+    @keyframes growBar { from { width: 0 !important; } }
+    .score-val { font-size: 11px; font-weight: 600; text-align: right; }
 
-    @keyframes growBar {
-      from { width: 0 !important; }
-    }
-
-    .score-val {
-      font-size: 11px; font-weight: 600;
-      text-align: right;
-    }
-
-    /* ── Methodology section ── */
     .methodology {
-      margin-top: 4rem; padding-top: 2rem;
-      border-top: 1px solid var(--border);
+      margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border);
     }
-
     .methodology h3 {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 1rem; color: var(--white);
-      margin-bottom: 1rem;
+      font-family: 'Libre Baskerville', serif; font-size: 1rem; color: var(--white); margin-bottom: 1rem;
     }
-
+    .methodology p {
+      font-family:'Libre Baskerville',serif; font-size:.85rem;
+      color:var(--text-dim); line-height:1.8; max-width:720px; margin-bottom:1rem;
+    }
     .method-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 1rem; margin-top: 1rem;
     }
-
-    .method-item {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 4px; padding: 1rem;
-    }
-
+    .method-item { background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 1rem; }
     .method-item h4 {
-      font-size: 10px; letter-spacing: .12em;
-      text-transform: uppercase; margin-bottom: .4rem;
+      font-size: 10px; letter-spacing: .12em; text-transform: uppercase; margin-bottom: .4rem; color: var(--teal);
     }
-
     .method-item h4.magnetic { color: var(--amber); }
-    .method-item h4.other    { color: var(--teal); }
+    .method-item p { font-size: .8rem; margin: 0; }
 
-    .method-item p {
-      font-family: 'Libre Baskerville', serif;
-      font-size: .8rem; color: var(--text-dim); line-height: 1.6;
-    }
-
-    /* ── Footer ── */
     footer {
-      margin-top: 3rem; padding-top: 1.5rem;
-      border-top: 1px solid var(--border);
-      font-size: 10px; letter-spacing: .08em;
-      color: var(--text-dim);
-      display: flex; flex-wrap: wrap; gap: 1rem;
-      justify-content: space-between; align-items: center;
+      margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
+      font-size: 10px; letter-spacing: .08em; color: var(--text-dim);
+      display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center;
     }
-
     footer a { color: var(--teal); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
 
-    /* ── Responsive ── */
-    @media (max-width: 600px) {
+    @media (max-width: 650px) {
       .card-header { flex-direction: column; }
       .composite-gauge { align-self: flex-end; }
-      .score-row { grid-template-columns: 110px 1fr 32px; }
+      .score-row { grid-template-columns: 122px 1fr 36px; }
       .card-rank { width: 36px; min-width: 36px; font-size: 1rem; }
     }
   </style>
@@ -289,10 +183,10 @@
       <p class="header-eyebrow">Vigil &nbsp;/&nbsp; Exoplanet Habitability Index &nbsp;/&nbsp; SETI Targeting</p>
       <h1>The Long<br/><em>Watch.</em></h1>
       <p class="header-desc">
-        A ranked catalogue of confirmed exoplanets scored across six physical
-        habitability dimensions — including magnetic field likelihood, the most
-        underappreciated filter in the search for life.  Updated automatically
-        each year from the NASA Exoplanet Archive.
+        A ranked catalogue of confirmed exoplanets scored across physical
+        habitability dimensions, then filtered through evidence, thermal sanity,
+        and data confidence. Missing data now lowers confidence instead of
+        accidentally promoting a planet.
       </p>
       <div class="header-meta">
         <span>Data source: <strong>NASA Exoplanet Archive</strong></span>
@@ -301,7 +195,7 @@
       </div>
     </header>
 
-    <p class="section-title">Top 10 Candidates</p>
+    <p class="section-title">Top 10 Evidence-Adjusted Candidates</p>
 
     <div class="cards">
       
@@ -310,34 +204,49 @@
     <div class="card-body">
       <div class="card-header">
         <div class="card-names">
-          <h2 class="planet-name">EPIC 220492298 b</h2>
-          <p class="planet-meta">EPIC 220492298 &nbsp;·&nbsp; 625 pc &nbsp;·&nbsp; disc. 2021</p>
-          <p class="missing">⚠ missing data: atmosphere_hold, habitable_zone, magnetic_field, system_age</p>
+          <p class="rank-type">ranked</p>
+          <h2 class="planet-name">GJ 1061 d</h2>
+          <p class="planet-meta">GJ 1061 &nbsp;·&nbsp; 4 pc &nbsp;·&nbsp; disc. 2020</p>
+          <div class="badges"><span class="badge">M-dwarf flare/tidal-lock risk</span></div>
         </div>
         <div class="composite-gauge">
-          <svg viewBox="0 0 100 100" width="90" height="90">
+          <svg viewBox="0 0 100 100" width="92" height="92">
             <circle cx="50" cy="50" r="40" fill="none" stroke="#1a2535" stroke-width="8"/>
             <circle cx="50" cy="50" r="40" fill="none" stroke="#3af7b5" stroke-width="8"
-              stroke-dasharray="240.7 251.3"
+              stroke-dasharray="199.4 251.3"
               stroke-dashoffset="62.8"
               stroke-linecap="round"/>
             <text x="50" y="50" text-anchor="middle" dy="0.35em"
               font-family="'JetBrains Mono',monospace" font-size="16"
-              fill="#3af7b5" font-weight="700">9.58</text>
+              fill="#3af7b5" font-weight="700">7.93</text>
           </svg>
-          <p class="gauge-label">composite</p>
+          <p class="gauge-label">Vigil score</p>
         </div>
       </div>
+
+      <div class="score-summary">
+        <span>Evidence <strong>7.93</strong></span>
+        <span>Confidence <strong>10.0</strong></span>
+        <span>Ceiling <strong>10.0</strong></span>
+      </div>
+
       <div class="score-bars">
         <div class="score-row">
           <span class="score-label">Magnetic Field ★</span>
           <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
+            <div class="bar-fill" style="width:85.4%;background:#ff8c42;"></div>
           </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
+          <span class="score-val" style="color:#ff8c42;">8.5</span>
         </div>
         <div class="score-row">
           <span class="score-label">Habitable Zone</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:85.2%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">8.5</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Thermal Plausibility</span>
           <div class="bar-track">
             <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
           </div>
@@ -346,30 +255,37 @@
         <div class="score-row">
           <span class="score-label">Rocky Surface</span>
           <div class="bar-track">
-            <div class="bar-fill" style="width:99.9%;background:#3af7b5;"></div>
+            <div class="bar-fill" style="width:86.7%;background:#3af7b5;"></div>
           </div>
-          <span class="score-val" style="color:#3af7b5;">10.0</span>
+          <span class="score-val" style="color:#3af7b5;">8.7</span>
         </div>
         <div class="score-row">
           <span class="score-label">Stellar Stability</span>
           <div class="bar-track">
-            <div class="bar-fill" style="width:90.3%;background:#3af7b5;"></div>
+            <div class="bar-fill" style="width:40.6%;background:#f75a3a;"></div>
           </div>
-          <span class="score-val" style="color:#3af7b5;">9.0</span>
+          <span class="score-val" style="color:#f75a3a;">4.1</span>
         </div>
         <div class="score-row">
           <span class="score-label">System Age</span>
           <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
+            <div class="bar-fill" style="width:88.2%;background:#3af7b5;"></div>
           </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
+          <span class="score-val" style="color:#3af7b5;">8.8</span>
         </div>
         <div class="score-row">
           <span class="score-label">Atmos. Retention</span>
           <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
+            <div class="bar-fill" style="width:88.3%;background:#3af7b5;"></div>
           </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
+          <span class="score-val" style="color:#3af7b5;">8.8</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Data Confidence</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100.0%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">10.0</span>
         </div></div>
     </div>
   </article>
@@ -378,568 +294,752 @@
     <div class="card-body">
       <div class="card-header">
         <div class="card-names">
-          <h2 class="planet-name">EPIC 201754305 d</h2>
-          <p class="planet-meta">K2-16 &nbsp;·&nbsp; 335 pc &nbsp;·&nbsp; disc. 2019</p>
-          <p class="missing">⚠ missing data: atmosphere_hold, habitable_zone, magnetic_field, system_age</p>
+          <p class="rank-type">ranked</p>
+          <h2 class="planet-name">TRAPPIST-1 e</h2>
+          <p class="planet-meta">TRAPPIST-1 &nbsp;·&nbsp; 12 pc &nbsp;·&nbsp; disc. 2017</p>
+          <div class="badges"><span class="badge">M-dwarf flare/tidal-lock risk</span></div>
         </div>
         <div class="composite-gauge">
-          <svg viewBox="0 0 100 100" width="90" height="90">
+          <svg viewBox="0 0 100 100" width="92" height="92">
             <circle cx="50" cy="50" r="40" fill="none" stroke="#1a2535" stroke-width="8"/>
             <circle cx="50" cy="50" r="40" fill="none" stroke="#3af7b5" stroke-width="8"
-              stroke-dasharray="240.5 251.3"
+              stroke-dasharray="190.0 251.3"
               stroke-dashoffset="62.8"
               stroke-linecap="round"/>
             <text x="50" y="50" text-anchor="middle" dy="0.35em"
               font-family="'JetBrains Mono',monospace" font-size="16"
-              fill="#3af7b5" font-weight="700">9.57</text>
+              fill="#3af7b5" font-weight="700">7.56</text>
           </svg>
-          <p class="gauge-label">composite</p>
+          <p class="gauge-label">Vigil score</p>
         </div>
       </div>
+
+      <div class="score-summary">
+        <span>Evidence <strong>7.56</strong></span>
+        <span>Confidence <strong>10.0</strong></span>
+        <span>Ceiling <strong>10.0</strong></span>
+      </div>
+
       <div class="score-bars">
         <div class="score-row">
           <span class="score-label">Magnetic Field ★</span>
           <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
+            <div class="bar-fill" style="width:59.2%;background:#ff8c42;"></div>
           </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
+          <span class="score-val" style="color:#ff8c42;">5.9</span>
         </div>
         <div class="score-row">
           <span class="score-label">Habitable Zone</span>
           <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Rocky Surface</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:99.5%;background:#3af7b5;"></div>
-          </div>
-          <span class="score-val" style="color:#3af7b5;">10.0</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Stellar Stability</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:90.6%;background:#3af7b5;"></div>
-          </div>
-          <span class="score-val" style="color:#3af7b5;">9.1</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">System Age</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Atmos. Retention</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div></div>
-    </div>
-  </article>
-  <article class="card" style="--rank-color:#3af7b5;">
-    <div class="card-rank">03</div>
-    <div class="card-body">
-      <div class="card-header">
-        <div class="card-names">
-          <h2 class="planet-name">EPIC 206317286 b</h2>
-          <p class="planet-meta">EPIC 206317286 &nbsp;·&nbsp; 314 pc &nbsp;·&nbsp; disc. 2019</p>
-          <p class="missing">⚠ missing data: atmosphere_hold, habitable_zone, magnetic_field, system_age</p>
-        </div>
-        <div class="composite-gauge">
-          <svg viewBox="0 0 100 100" width="90" height="90">
-            <circle cx="50" cy="50" r="40" fill="none" stroke="#1a2535" stroke-width="8"/>
-            <circle cx="50" cy="50" r="40" fill="none" stroke="#3af7b5" stroke-width="8"
-              stroke-dasharray="239.8 251.3"
-              stroke-dashoffset="62.8"
-              stroke-linecap="round"/>
-            <text x="50" y="50" text-anchor="middle" dy="0.35em"
-              font-family="'JetBrains Mono',monospace" font-size="16"
-              fill="#3af7b5" font-weight="700">9.54</text>
-          </svg>
-          <p class="gauge-label">composite</p>
-        </div>
-      </div>
-      <div class="score-bars">
-        <div class="score-row">
-          <span class="score-label">Magnetic Field ★</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Habitable Zone</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Rocky Surface</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:99.1%;background:#3af7b5;"></div>
-          </div>
-          <span class="score-val" style="color:#3af7b5;">9.9</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Stellar Stability</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:90.5%;background:#3af7b5;"></div>
-          </div>
-          <span class="score-val" style="color:#3af7b5;">9.1</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">System Age</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Atmos. Retention</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div></div>
-    </div>
-  </article>
-  <article class="card" style="--rank-color:#3af7b5;">
-    <div class="card-rank">04</div>
-    <div class="card-body">
-      <div class="card-header">
-        <div class="card-names">
-          <h2 class="planet-name">K2-338 b</h2>
-          <p class="planet-meta">K2-338 &nbsp;·&nbsp; 157 pc &nbsp;·&nbsp; disc. 2021</p>
-          <p class="missing">⚠ missing data: atmosphere_hold, habitable_zone, magnetic_field, system_age</p>
-        </div>
-        <div class="composite-gauge">
-          <svg viewBox="0 0 100 100" width="90" height="90">
-            <circle cx="50" cy="50" r="40" fill="none" stroke="#1a2535" stroke-width="8"/>
-            <circle cx="50" cy="50" r="40" fill="none" stroke="#3af7b5" stroke-width="8"
-              stroke-dasharray="238.3 251.3"
-              stroke-dashoffset="62.8"
-              stroke-linecap="round"/>
-            <text x="50" y="50" text-anchor="middle" dy="0.35em"
-              font-family="'JetBrains Mono',monospace" font-size="16"
-              fill="#3af7b5" font-weight="700">9.48</text>
-          </svg>
-          <p class="gauge-label">composite</p>
-        </div>
-      </div>
-      <div class="score-bars">
-        <div class="score-row">
-          <span class="score-label">Magnetic Field ★</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Habitable Zone</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Rocky Surface</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:99.5%;background:#3af7b5;"></div>
-          </div>
-          <span class="score-val" style="color:#3af7b5;">10.0</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Stellar Stability</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:88.6%;background:#3af7b5;"></div>
-          </div>
-          <span class="score-val" style="color:#3af7b5;">8.9</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">System Age</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Atmos. Retention</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div></div>
-    </div>
-  </article>
-  <article class="card" style="--rank-color:#3af7b5;">
-    <div class="card-rank">05</div>
-    <div class="card-body">
-      <div class="card-header">
-        <div class="card-names">
-          <h2 class="planet-name">EPIC 201833600 c</h2>
-          <p class="planet-meta">K2-50 &nbsp;·&nbsp; 257 pc &nbsp;·&nbsp; disc. 2019</p>
-          <p class="missing">⚠ missing data: atmosphere_hold, habitable_zone, magnetic_field, system_age</p>
-        </div>
-        <div class="composite-gauge">
-          <svg viewBox="0 0 100 100" width="90" height="90">
-            <circle cx="50" cy="50" r="40" fill="none" stroke="#1a2535" stroke-width="8"/>
-            <circle cx="50" cy="50" r="40" fill="none" stroke="#3af7b5" stroke-width="8"
-              stroke-dasharray="236.5 251.3"
-              stroke-dashoffset="62.8"
-              stroke-linecap="round"/>
-            <text x="50" y="50" text-anchor="middle" dy="0.35em"
-              font-family="'JetBrains Mono',monospace" font-size="16"
-              fill="#3af7b5" font-weight="700">9.41</text>
-          </svg>
-          <p class="gauge-label">composite</p>
-        </div>
-      </div>
-      <div class="score-bars">
-        <div class="score-row">
-          <span class="score-label">Magnetic Field ★</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Habitable Zone</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Rocky Surface</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:100.0%;background:#3af7b5;"></div>
-          </div>
-          <span class="score-val" style="color:#3af7b5;">10.0</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Stellar Stability</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:86.3%;background:#3af7b5;"></div>
-          </div>
-          <span class="score-val" style="color:#3af7b5;">8.6</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">System Age</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Atmos. Retention</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div></div>
-    </div>
-  </article>
-  <article class="card" style="--rank-color:#3af7b5;">
-    <div class="card-rank">06</div>
-    <div class="card-body">
-      <div class="card-header">
-        <div class="card-names">
-          <h2 class="planet-name">K2-190 c</h2>
-          <p class="planet-meta">K2-190 &nbsp;·&nbsp; 161 pc &nbsp;·&nbsp; disc. 2018</p>
-          <p class="missing">⚠ missing data: atmosphere_hold, habitable_zone, magnetic_field, system_age</p>
-        </div>
-        <div class="composite-gauge">
-          <svg viewBox="0 0 100 100" width="90" height="90">
-            <circle cx="50" cy="50" r="40" fill="none" stroke="#1a2535" stroke-width="8"/>
-            <circle cx="50" cy="50" r="40" fill="none" stroke="#3af7b5" stroke-width="8"
-              stroke-dasharray="234.2 251.3"
-              stroke-dashoffset="62.8"
-              stroke-linecap="round"/>
-            <text x="50" y="50" text-anchor="middle" dy="0.35em"
-              font-family="'JetBrains Mono',monospace" font-size="16"
-              fill="#3af7b5" font-weight="700">9.32</text>
-          </svg>
-          <p class="gauge-label">composite</p>
-        </div>
-      </div>
-      <div class="score-bars">
-        <div class="score-row">
-          <span class="score-label">Magnetic Field ★</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Habitable Zone</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Rocky Surface</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:95.3%;background:#3af7b5;"></div>
+            <div class="bar-fill" style="width:94.9%;background:#3af7b5;"></div>
           </div>
           <span class="score-val" style="color:#3af7b5;">9.5</span>
         </div>
         <div class="score-row">
-          <span class="score-label">Stellar Stability</span>
+          <span class="score-label">Thermal Plausibility</span>
           <div class="bar-track">
-            <div class="bar-fill" style="width:90.4%;background:#3af7b5;"></div>
+            <div class="bar-fill" style="width:97.2%;background:#3af7b5;"></div>
           </div>
-          <span class="score-val" style="color:#3af7b5;">9.0</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">System Age</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Atmos. Retention</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div></div>
-    </div>
-  </article>
-  <article class="card" style="--rank-color:#3af7b5;">
-    <div class="card-rank">07</div>
-    <div class="card-body">
-      <div class="card-header">
-        <div class="card-names">
-          <h2 class="planet-name">K2-381 b</h2>
-          <p class="planet-meta">K2-381 &nbsp;·&nbsp; 146 pc &nbsp;·&nbsp; disc. 2022</p>
-          <p class="missing">⚠ missing data: atmosphere_hold, habitable_zone, magnetic_field, system_age</p>
-        </div>
-        <div class="composite-gauge">
-          <svg viewBox="0 0 100 100" width="90" height="90">
-            <circle cx="50" cy="50" r="40" fill="none" stroke="#1a2535" stroke-width="8"/>
-            <circle cx="50" cy="50" r="40" fill="none" stroke="#3af7b5" stroke-width="8"
-              stroke-dasharray="233.7 251.3"
-              stroke-dashoffset="62.8"
-              stroke-linecap="round"/>
-            <text x="50" y="50" text-anchor="middle" dy="0.35em"
-              font-family="'JetBrains Mono',monospace" font-size="16"
-              fill="#3af7b5" font-weight="700">9.30</text>
-          </svg>
-          <p class="gauge-label">composite</p>
-        </div>
-      </div>
-      <div class="score-bars">
-        <div class="score-row">
-          <span class="score-label">Magnetic Field ★</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Habitable Zone</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
+          <span class="score-val" style="color:#3af7b5;">9.7</span>
         </div>
         <div class="score-row">
           <span class="score-label">Rocky Surface</span>
           <div class="bar-track">
-            <div class="bar-fill" style="width:96.9%;background:#3af7b5;"></div>
+            <div class="bar-fill" style="width:96.5%;background:#3af7b5;"></div>
           </div>
           <span class="score-val" style="color:#3af7b5;">9.7</span>
         </div>
         <div class="score-row">
           <span class="score-label">Stellar Stability</span>
           <div class="bar-track">
-            <div class="bar-fill" style="width:87.7%;background:#3af7b5;"></div>
+            <div class="bar-fill" style="width:33.2%;background:#f75a3a;"></div>
           </div>
-          <span class="score-val" style="color:#3af7b5;">8.8</span>
+          <span class="score-val" style="color:#f75a3a;">3.3</span>
         </div>
         <div class="score-row">
           <span class="score-label">System Age</span>
           <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
+            <div class="bar-fill" style="width:81.0%;background:#3af7b5;"></div>
           </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
+          <span class="score-val" style="color:#3af7b5;">8.1</span>
         </div>
         <div class="score-row">
           <span class="score-label">Atmos. Retention</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div></div>
-    </div>
-  </article>
-  <article class="card" style="--rank-color:#3af7b5;">
-    <div class="card-rank">08</div>
-    <div class="card-body">
-      <div class="card-header">
-        <div class="card-names">
-          <h2 class="planet-name">EPIC 201615463 c</h2>
-          <p class="planet-meta">K2-166 &nbsp;·&nbsp; 477 pc &nbsp;·&nbsp; disc. 2019</p>
-          <p class="missing">⚠ missing data: atmosphere_hold, habitable_zone, magnetic_field, system_age</p>
-        </div>
-        <div class="composite-gauge">
-          <svg viewBox="0 0 100 100" width="90" height="90">
-            <circle cx="50" cy="50" r="40" fill="none" stroke="#1a2535" stroke-width="8"/>
-            <circle cx="50" cy="50" r="40" fill="none" stroke="#3af7b5" stroke-width="8"
-              stroke-dasharray="232.1 251.3"
-              stroke-dashoffset="62.8"
-              stroke-linecap="round"/>
-            <text x="50" y="50" text-anchor="middle" dy="0.35em"
-              font-family="'JetBrains Mono',monospace" font-size="16"
-              fill="#3af7b5" font-weight="700">9.24</text>
-          </svg>
-          <p class="gauge-label">composite</p>
-        </div>
-      </div>
-      <div class="score-bars">
-        <div class="score-row">
-          <span class="score-label">Magnetic Field ★</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Habitable Zone</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Rocky Surface</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:90.8%;background:#3af7b5;"></div>
-          </div>
-          <span class="score-val" style="color:#3af7b5;">9.1</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Stellar Stability</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:94.5%;background:#3af7b5;"></div>
-          </div>
-          <span class="score-val" style="color:#3af7b5;">9.4</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">System Age</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Atmos. Retention</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div></div>
-    </div>
-  </article>
-  <article class="card" style="--rank-color:#3af7b5;">
-    <div class="card-rank">09</div>
-    <div class="card-body">
-      <div class="card-header">
-        <div class="card-names">
-          <h2 class="planet-name">K2-183 b</h2>
-          <p class="planet-meta">K2-183 &nbsp;·&nbsp; 329 pc &nbsp;·&nbsp; disc. 2018</p>
-          <p class="missing">⚠ missing data: atmosphere_hold, habitable_zone, magnetic_field, system_age</p>
-        </div>
-        <div class="composite-gauge">
-          <svg viewBox="0 0 100 100" width="90" height="90">
-            <circle cx="50" cy="50" r="40" fill="none" stroke="#1a2535" stroke-width="8"/>
-            <circle cx="50" cy="50" r="40" fill="none" stroke="#3af7b5" stroke-width="8"
-              stroke-dasharray="231.2 251.3"
-              stroke-dashoffset="62.8"
-              stroke-linecap="round"/>
-            <text x="50" y="50" text-anchor="middle" dy="0.35em"
-              font-family="'JetBrains Mono',monospace" font-size="16"
-              fill="#3af7b5" font-weight="700">9.20</text>
-          </svg>
-          <p class="gauge-label">composite</p>
-        </div>
-      </div>
-      <div class="score-bars">
-        <div class="score-row">
-          <span class="score-label">Magnetic Field ★</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Habitable Zone</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Rocky Surface</span>
           <div class="bar-track">
             <div class="bar-fill" style="width:94.6%;background:#3af7b5;"></div>
           </div>
           <span class="score-val" style="color:#3af7b5;">9.5</span>
         </div>
         <div class="score-row">
-          <span class="score-label">Stellar Stability</span>
+          <span class="score-label">Data Confidence</span>
           <div class="bar-track">
-            <div class="bar-fill" style="width:88.5%;background:#3af7b5;"></div>
+            <div class="bar-fill" style="width:100.0%;background:#3af7b5;"></div>
           </div>
-          <span class="score-val" style="color:#3af7b5;">8.9</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">System Age</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
-        </div>
-        <div class="score-row">
-          <span class="score-label">Atmos. Retention</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
-          </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
+          <span class="score-val" style="color:#3af7b5;">10.0</span>
         </div></div>
     </div>
   </article>
-  <article class="card" style="--rank-color:#3af7b5;">
-    <div class="card-rank">10</div>
+  <article class="card" style="--rank-color:#f7c948;">
+    <div class="card-rank">03</div>
     <div class="card-body">
       <div class="card-header">
         <div class="card-names">
-          <h2 class="planet-name">PSR B0329+54 b</h2>
-          <p class="planet-meta">PSR B0329+54 &nbsp;·&nbsp; 505 pc &nbsp;·&nbsp; disc. 2017</p>
-          <p class="missing">⚠ missing data: atmosphere_hold, habitable_zone, magnetic_field, stellar_stability, system_age</p>
+          <p class="rank-type">ranked</p>
+          <h2 class="planet-name">K2-3 d</h2>
+          <p class="planet-meta">K2-3 &nbsp;·&nbsp; 44 pc &nbsp;·&nbsp; disc. 2015</p>
+          
         </div>
         <div class="composite-gauge">
-          <svg viewBox="0 0 100 100" width="90" height="90">
+          <svg viewBox="0 0 100 100" width="92" height="92">
             <circle cx="50" cy="50" r="40" fill="none" stroke="#1a2535" stroke-width="8"/>
-            <circle cx="50" cy="50" r="40" fill="none" stroke="#3af7b5" stroke-width="8"
-              stroke-dasharray="228.1 251.3"
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#f7c948" stroke-width="8"
+              stroke-dasharray="168.5 251.3"
               stroke-dashoffset="62.8"
               stroke-linecap="round"/>
             <text x="50" y="50" text-anchor="middle" dy="0.35em"
               font-family="'JetBrains Mono',monospace" font-size="16"
-              fill="#3af7b5" font-weight="700">9.08</text>
+              fill="#f7c948" font-weight="700">6.71</text>
           </svg>
-          <p class="gauge-label">composite</p>
+          <p class="gauge-label">Vigil score</p>
         </div>
       </div>
+
+      <div class="score-summary">
+        <span>Evidence <strong>6.71</strong></span>
+        <span>Confidence <strong>10.0</strong></span>
+        <span>Ceiling <strong>10.0</strong></span>
+      </div>
+
+      <div class="score-bars">
+        <div class="score-row">
+          <span class="score-label">Magnetic Field ★</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:94.2%;background:#ff8c42;"></div>
+          </div>
+          <span class="score-val" style="color:#ff8c42;">9.4</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Habitable Zone</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:19.9%;background:#f75a3a;"></div>
+          </div>
+          <span class="score-val" style="color:#f75a3a;">2.0</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Thermal Plausibility</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:91.8%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">9.2</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Rocky Surface</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:65.7%;background:#f7c948;"></div>
+          </div>
+          <span class="score-val" style="color:#f7c948;">6.6</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Stellar Stability</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:81.4%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">8.1</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">System Age</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:89.3%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">8.9</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Atmos. Retention</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:85.0%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">8.5</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Data Confidence</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100.0%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">10.0</span>
+        </div></div>
+    </div>
+  </article>
+  <article class="card" style="--rank-color:#f7c948;">
+    <div class="card-rank">04</div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-names">
+          <p class="rank-type">ranked</p>
+          <h2 class="planet-name">TRAPPIST-1 f</h2>
+          <p class="planet-meta">TRAPPIST-1 &nbsp;·&nbsp; 12 pc &nbsp;·&nbsp; disc. 2017</p>
+          <div class="badges"><span class="badge">M-dwarf flare/tidal-lock risk</span></div>
+        </div>
+        <div class="composite-gauge">
+          <svg viewBox="0 0 100 100" width="92" height="92">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#1a2535" stroke-width="8"/>
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#f7c948" stroke-width="8"
+              stroke-dasharray="164.3 251.3"
+              stroke-dashoffset="62.8"
+              stroke-linecap="round"/>
+            <text x="50" y="50" text-anchor="middle" dy="0.35em"
+              font-family="'JetBrains Mono',monospace" font-size="16"
+              fill="#f7c948" font-weight="700">6.54</text>
+          </svg>
+          <p class="gauge-label">Vigil score</p>
+        </div>
+      </div>
+
+      <div class="score-summary">
+        <span>Evidence <strong>6.54</strong></span>
+        <span>Confidence <strong>10.0</strong></span>
+        <span>Ceiling <strong>10.0</strong></span>
+      </div>
+
+      <div class="score-bars">
+        <div class="score-row">
+          <span class="score-label">Magnetic Field ★</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70.7%;background:#ff8c42;"></div>
+          </div>
+          <span class="score-val" style="color:#ff8c42;">7.1</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Habitable Zone</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:39.5%;background:#f75a3a;"></div>
+          </div>
+          <span class="score-val" style="color:#f75a3a;">4.0</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Thermal Plausibility</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:82.8%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">8.3</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Rocky Surface</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:98.9%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">9.9</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Stellar Stability</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:33.2%;background:#f75a3a;"></div>
+          </div>
+          <span class="score-val" style="color:#f75a3a;">3.3</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">System Age</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:81.0%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">8.1</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Atmos. Retention</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100.0%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">10.0</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Data Confidence</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100.0%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">10.0</span>
+        </div></div>
+    </div>
+  </article>
+  <article class="card" style="--rank-color:#f7c948;">
+    <div class="card-rank">05</div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-names">
+          <p class="rank-type">ranked</p>
+          <h2 class="planet-name">Gliese 12 b</h2>
+          <p class="planet-meta">Gliese 12 &nbsp;·&nbsp; 12 pc &nbsp;·&nbsp; disc. 2024</p>
+          <div class="badges"><span class="badge">M-dwarf flare/tidal-lock risk</span></div>
+        </div>
+        <div class="composite-gauge">
+          <svg viewBox="0 0 100 100" width="92" height="92">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#1a2535" stroke-width="8"/>
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#f7c948" stroke-width="8"
+              stroke-dasharray="156.4 251.3"
+              stroke-dashoffset="62.8"
+              stroke-linecap="round"/>
+            <text x="50" y="50" text-anchor="middle" dy="0.35em"
+              font-family="'JetBrains Mono',monospace" font-size="16"
+              fill="#f7c948" font-weight="700">6.22</text>
+          </svg>
+          <p class="gauge-label">Vigil score</p>
+        </div>
+      </div>
+
+      <div class="score-summary">
+        <span>Evidence <strong>6.22</strong></span>
+        <span>Confidence <strong>10.0</strong></span>
+        <span>Ceiling <strong>10.0</strong></span>
+      </div>
+
+      <div class="score-bars">
+        <div class="score-row">
+          <span class="score-label">Magnetic Field ★</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:74.7%;background:#ff8c42;"></div>
+          </div>
+          <span class="score-val" style="color:#ff8c42;">7.5</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Habitable Zone</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:12.4%;background:#f75a3a;"></div>
+          </div>
+          <span class="score-val" style="color:#f75a3a;">1.2</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Thermal Plausibility</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:87.1%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">8.7</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Rocky Surface</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:97.3%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">9.7</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Stellar Stability</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:47.9%;background:#f75a3a;"></div>
+          </div>
+          <span class="score-val" style="color:#f75a3a;">4.8</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">System Age</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:88.2%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">8.8</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Atmos. Retention</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100.0%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">10.0</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Data Confidence</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100.0%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">10.0</span>
+        </div></div>
+    </div>
+  </article>
+  <article class="card" style="--rank-color:#f7c948;">
+    <div class="card-rank">06</div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-names">
+          <p class="rank-type">ranked</p>
+          <h2 class="planet-name">TRAPPIST-1 g</h2>
+          <p class="planet-meta">TRAPPIST-1 &nbsp;·&nbsp; 12 pc &nbsp;·&nbsp; disc. 2017</p>
+          <div class="badges"><span class="badge">M-dwarf flare/tidal-lock risk</span></div>
+        </div>
+        <div class="composite-gauge">
+          <svg viewBox="0 0 100 100" width="92" height="92">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#1a2535" stroke-width="8"/>
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#f7c948" stroke-width="8"
+              stroke-dasharray="154.1 251.3"
+              stroke-dashoffset="62.8"
+              stroke-linecap="round"/>
+            <text x="50" y="50" text-anchor="middle" dy="0.35em"
+              font-family="'JetBrains Mono',monospace" font-size="16"
+              fill="#f7c948" font-weight="700">6.13</text>
+          </svg>
+          <p class="gauge-label">Vigil score</p>
+        </div>
+      </div>
+
+      <div class="score-summary">
+        <span>Evidence <strong>6.13</strong></span>
+        <span>Confidence <strong>10.0</strong></span>
+        <span>Ceiling <strong>10.0</strong></span>
+      </div>
+
+      <div class="score-bars">
+        <div class="score-row">
+          <span class="score-label">Magnetic Field ★</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:79.7%;background:#ff8c42;"></div>
+          </div>
+          <span class="score-val" style="color:#ff8c42;">8.0</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Habitable Zone</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:20.8%;background:#f75a3a;"></div>
+          </div>
+          <span class="score-val" style="color:#f75a3a;">2.1</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Thermal Plausibility</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:69.4%;background:#f7c948;"></div>
+          </div>
+          <span class="score-val" style="color:#f7c948;">6.9</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Rocky Surface</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:91.2%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">9.1</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Stellar Stability</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:33.2%;background:#f75a3a;"></div>
+          </div>
+          <span class="score-val" style="color:#f75a3a;">3.3</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">System Age</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:81.0%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">8.1</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Atmos. Retention</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:97.9%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">9.8</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Data Confidence</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100.0%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">10.0</span>
+        </div></div>
+    </div>
+  </article>
+  <article class="card" style="--rank-color:#f7c948;">
+    <div class="card-rank">07</div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-names">
+          <p class="rank-type">ranked</p>
+          <h2 class="planet-name">Kepler-138 e</h2>
+          <p class="planet-meta">Kepler-138 &nbsp;·&nbsp; 67 pc &nbsp;·&nbsp; disc. 2022</p>
+          
+        </div>
+        <div class="composite-gauge">
+          <svg viewBox="0 0 100 100" width="92" height="92">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#1a2535" stroke-width="8"/>
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#f7c948" stroke-width="8"
+              stroke-dasharray="153.8 251.3"
+              stroke-dashoffset="62.8"
+              stroke-linecap="round"/>
+            <text x="50" y="50" text-anchor="middle" dy="0.35em"
+              font-family="'JetBrains Mono',monospace" font-size="16"
+              fill="#f7c948" font-weight="700">6.12</text>
+          </svg>
+          <p class="gauge-label">Vigil score</p>
+        </div>
+      </div>
+
+      <div class="score-summary">
+        <span>Evidence <strong>6.12</strong></span>
+        <span>Confidence <strong>10.0</strong></span>
+        <span>Ceiling <strong>10.0</strong></span>
+      </div>
+
+      <div class="score-bars">
+        <div class="score-row">
+          <span class="score-label">Magnetic Field ★</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:75.5%;background:#ff8c42;"></div>
+          </div>
+          <span class="score-val" style="color:#ff8c42;">7.5</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Habitable Zone</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:9.4%;background:#f75a3a;"></div>
+          </div>
+          <span class="score-val" style="color:#f75a3a;">0.9</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Thermal Plausibility</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:96.7%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">9.7</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Rocky Surface</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:79.5%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">8.0</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Stellar Stability</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:81.4%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">8.1</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">System Age</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:78.4%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">7.8</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Atmos. Retention</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:80.2%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">8.0</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Data Confidence</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100.0%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">10.0</span>
+        </div></div>
+    </div>
+  </article>
+  <article class="card" style="--rank-color:#f7c948;">
+    <div class="card-rank">08</div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-names">
+          <p class="rank-type">ranked</p>
+          <h2 class="planet-name">GJ 1061 c</h2>
+          <p class="planet-meta">GJ 1061 &nbsp;·&nbsp; 4 pc &nbsp;·&nbsp; disc. 2020</p>
+          <div class="badges"><span class="badge">M-dwarf flare/tidal-lock risk</span></div>
+        </div>
+        <div class="composite-gauge">
+          <svg viewBox="0 0 100 100" width="92" height="92">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#1a2535" stroke-width="8"/>
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#f7c948" stroke-width="8"
+              stroke-dasharray="149.6 251.3"
+              stroke-dashoffset="62.8"
+              stroke-linecap="round"/>
+            <text x="50" y="50" text-anchor="middle" dy="0.35em"
+              font-family="'JetBrains Mono',monospace" font-size="16"
+              fill="#f7c948" font-weight="700">5.95</text>
+          </svg>
+          <p class="gauge-label">Vigil score</p>
+        </div>
+      </div>
+
+      <div class="score-summary">
+        <span>Evidence <strong>5.95</strong></span>
+        <span>Confidence <strong>10.0</strong></span>
+        <span>Ceiling <strong>10.0</strong></span>
+      </div>
+
+      <div class="score-bars">
+        <div class="score-row">
+          <span class="score-label">Magnetic Field ★</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:76.5%;background:#ff8c42;"></div>
+          </div>
+          <span class="score-val" style="color:#ff8c42;">7.7</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Habitable Zone</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:19.6%;background:#f75a3a;"></div>
+          </div>
+          <span class="score-val" style="color:#f75a3a;">2.0</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Thermal Plausibility</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
+          </div>
+          <span class="score-val" style="color:#2a3a52;">N/A</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Rocky Surface</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:81.8%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">8.2</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Stellar Stability</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:40.6%;background:#f75a3a;"></div>
+          </div>
+          <span class="score-val" style="color:#f75a3a;">4.1</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">System Age</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:88.2%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">8.8</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Atmos. Retention</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:84.4%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">8.4</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Data Confidence</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100.0%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">10.0</span>
+        </div></div>
+    </div>
+  </article>
+  <article class="card" style="--rank-color:#f7c948;">
+    <div class="card-rank">09</div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-names">
+          <p class="rank-type">ranked</p>
+          <h2 class="planet-name">TRAPPIST-1 d</h2>
+          <p class="planet-meta">TRAPPIST-1 &nbsp;·&nbsp; 12 pc &nbsp;·&nbsp; disc. 2016</p>
+          <div class="badges"><span class="badge">M-dwarf flare/tidal-lock risk</span></div>
+        </div>
+        <div class="composite-gauge">
+          <svg viewBox="0 0 100 100" width="92" height="92">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#1a2535" stroke-width="8"/>
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#f7c948" stroke-width="8"
+              stroke-dasharray="142.6 251.3"
+              stroke-dashoffset="62.8"
+              stroke-linecap="round"/>
+            <text x="50" y="50" text-anchor="middle" dy="0.35em"
+              font-family="'JetBrains Mono',monospace" font-size="16"
+              fill="#f7c948" font-weight="700">5.67</text>
+          </svg>
+          <p class="gauge-label">Vigil score</p>
+        </div>
+      </div>
+
+      <div class="score-summary">
+        <span>Evidence <strong>5.67</strong></span>
+        <span>Confidence <strong>10.0</strong></span>
+        <span>Ceiling <strong>10.0</strong></span>
+      </div>
+
+      <div class="score-bars">
+        <div class="score-row">
+          <span class="score-label">Magnetic Field ★</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:48.3%;background:#ff8c42;"></div>
+          </div>
+          <span class="score-val" style="color:#ff8c42;">4.8</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Habitable Zone</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:48.9%;background:#f75a3a;"></div>
+          </div>
+          <span class="score-val" style="color:#f75a3a;">4.9</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Thermal Plausibility</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:98.2%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">9.8</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Rocky Surface</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:77.9%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">7.8</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Stellar Stability</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:33.2%;background:#f75a3a;"></div>
+          </div>
+          <span class="score-val" style="color:#f75a3a;">3.3</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">System Age</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:81.0%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">8.1</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Atmos. Retention</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:75.7%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">7.6</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Data Confidence</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100.0%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">10.0</span>
+        </div></div>
+    </div>
+  </article>
+  <article class="card" style="--rank-color:#f7c948;">
+    <div class="card-rank">10</div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-names">
+          <p class="rank-type">ranked</p>
+          <h2 class="planet-name">Kepler-442 b</h2>
+          <p class="planet-meta">Kepler-442 &nbsp;·&nbsp; 366 pc &nbsp;·&nbsp; disc. 2015</p>
+          <div class="badges"><span class="badge">mass missing</span><span class="badge">missing: atmosphere_hold, magnetic_field</span></div>
+        </div>
+        <div class="composite-gauge">
+          <svg viewBox="0 0 100 100" width="92" height="92">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#1a2535" stroke-width="8"/>
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#f7c948" stroke-width="8"
+              stroke-dasharray="142.1 251.3"
+              stroke-dashoffset="62.8"
+              stroke-linecap="round"/>
+            <text x="50" y="50" text-anchor="middle" dy="0.35em"
+              font-family="'JetBrains Mono',monospace" font-size="16"
+              fill="#f7c948" font-weight="700">5.66</text>
+          </svg>
+          <p class="gauge-label">Vigil score</p>
+        </div>
+      </div>
+
+      <div class="score-summary">
+        <span>Evidence <strong>6.25</strong></span>
+        <span>Confidence <strong>8.2</strong></span>
+        <span>Ceiling <strong>10.0</strong></span>
+      </div>
+
       <div class="score-bars">
         <div class="score-row">
           <span class="score-label">Magnetic Field ★</span>
@@ -951,30 +1051,37 @@
         <div class="score-row">
           <span class="score-label">Habitable Zone</span>
           <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
+            <div class="bar-fill" style="width:99.2%;background:#3af7b5;"></div>
           </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
+          <span class="score-val" style="color:#3af7b5;">9.9</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Thermal Plausibility</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:94.4%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">9.4</span>
         </div>
         <div class="score-row">
           <span class="score-label">Rocky Surface</span>
           <div class="bar-track">
-            <div class="bar-fill" style="width:90.8%;background:#3af7b5;"></div>
+            <div class="bar-fill" style="width:79.4%;background:#3af7b5;"></div>
           </div>
-          <span class="score-val" style="color:#3af7b5;">9.1</span>
+          <span class="score-val" style="color:#3af7b5;">7.9</span>
         </div>
         <div class="score-row">
           <span class="score-label">Stellar Stability</span>
           <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
+            <div class="bar-fill" style="width:87.0%;background:#3af7b5;"></div>
           </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
+          <span class="score-val" style="color:#3af7b5;">8.7</span>
         </div>
         <div class="score-row">
           <span class="score-label">System Age</span>
           <div class="bar-track">
-            <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
+            <div class="bar-fill" style="width:87.1%;background:#3af7b5;"></div>
           </div>
-          <span class="score-val" style="color:#2a3a52;">N/A</span>
+          <span class="score-val" style="color:#3af7b5;">8.7</span>
         </div>
         <div class="score-row">
           <span class="score-label">Atmos. Retention</span>
@@ -982,6 +1089,13 @@
             <div class="bar-fill" style="width:0.0%;background:#2a3a52;"></div>
           </div>
           <span class="score-val" style="color:#2a3a52;">N/A</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Data Confidence</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:82.0%;background:#3af7b5;"></div>
+          </div>
+          <span class="score-val" style="color:#3af7b5;">8.2</span>
         </div></div>
     </div>
   </article>
@@ -989,45 +1103,35 @@
 
     <section class="methodology">
       <h3>Scoring Methodology</h3>
-      <p style="font-family:'Libre Baskerville',serif;font-size:.85rem;
-                color:var(--text-dim);line-height:1.8;max-width:680px;margin-bottom:1rem;">
-        Each planet is scored 0–10 across six dimensions using physical models
-        derived from published habitability research.  The composite score is a
-        weighted average (missing data dimensions are excluded and weights
-        redistributed).  The ★ magnetic field score carries the highest individual
-        weight (25%) as a shieldless planet loses its atmosphere to stellar wind
-        over geological timescales.
+      <p>
+        Vigil now uses an evidence-adjusted score. Missing dimensions count as
+        missing evidence, not free points. Ultra-short-period lava worlds, gas-giant
+        radii, and extreme equilibrium temperatures are capped before ranking.
       </p>
       <div class="method-grid">
         <div class="method-item">
           <h4 class="magnetic">★ Magnetic Field (25%)</h4>
-          <p>Inferred from planet mass, bulk density, tidal locking risk, and system age.
-             Requires an active liquid iron core dynamo. Peaks ~2 Earth masses.</p>
+          <p>Inferred from mass, density proxy, tidal-locking risk, and system age.</p>
         </div>
         <div class="method-item">
-          <h4 class="other">Habitable Zone (25%)</h4>
-          <p>Computed from stellar luminosity and orbital distance using the
-             Kopparapu et al. 2013 model.  Scores peak at the centre of the zone.</p>
+          <h4>Habitable Zone (25%)</h4>
+          <p>Computed from stellar luminosity and orbital distance where available.</p>
         </div>
         <div class="method-item">
-          <h4 class="other">Rocky Surface (20%)</h4>
-          <p>Radius below the Fulton gap (~1.5 R⊕) indicates a rocky world rather
-             than a mini-Neptune with a thick H/He envelope.</p>
+          <h4>Thermal Guardrail</h4>
+          <p>Known equilibrium temperatures cap obviously roasted or frozen worlds.</p>
         </div>
         <div class="method-item">
-          <h4 class="other">Stellar Stability (15%)</h4>
-          <p>G and K dwarfs score highest — long-lived, low UV, stable output.
-             M dwarfs penalised for flaring; O/B/A stars for short lifespans.</p>
+          <h4>Rocky Surface (20%)</h4>
+          <p>Uses the radius gap to penalise likely mini-Neptunes and gas-rich worlds.</p>
         </div>
         <div class="method-item">
-          <h4 class="other">System Age (10%)</h4>
-          <p>Complex life took ~4 Gyr on Earth.  Young systems haven't had time;
-             very old systems may have geologically dead planets.</p>
+          <h4>Data Confidence</h4>
+          <p>Rewards planets with enough mass, radius, orbit, stellar and age evidence.</p>
         </div>
         <div class="method-item">
-          <h4 class="other">Atmosphere Retention (5%)</h4>
-          <p>Escape velocity proxy from mass and radius.  Mars-like planets lose
-             atmospheres over Gyr timescales.  Peaks at Earth-like values.</p>
+          <h4>Vigil Score</h4>
+          <p>Final ranking = evidence score × confidence factor, then physical caps.</p>
         </div>
       </div>
     </section>
