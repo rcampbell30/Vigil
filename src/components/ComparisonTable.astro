@@ -1,0 +1,48 @@
+---
+interface Props {
+  planets: any[];
+}
+
+const { planets = [] } = Astro.props;
+
+const fmtScore = (score: number | null | undefined, digits = 2) =>
+  score === null || score === undefined ? 'N/A' : Number(score).toFixed(digits);
+
+const fmtDistance = (distance: number | null | undefined) =>
+  distance === null || distance === undefined ? 'unknown' : `${Number(distance).toFixed(1)} pc`;
+
+const firstRisk = (planet: any) => {
+  if (!planet.risk_flags || planet.risk_flags === 'none') return 'none';
+  return planet.risk_flags.split(',')[0].trim();
+};
+---
+
+<section class="mx-auto max-w-6xl px-5 py-8">
+  <h2 class="mb-4 text-xs font-bold uppercase tracking-widest text-observatory-muted">Top 10 at a glance</h2>
+  <div class="overflow-x-auto border border-observatory-line-soft bg-observatory-panel/80">
+    <table class="w-full min-w-[720px] border-collapse text-left text-xs">
+      <thead class="bg-white/[0.025] text-observatory-dim">
+        <tr>
+          <th class="border-b border-observatory-line-soft p-3 uppercase tracking-widest">Rank</th>
+          <th class="border-b border-observatory-line-soft p-3 uppercase tracking-widest">Planet</th>
+          <th class="border-b border-observatory-line-soft p-3 uppercase tracking-widest">Vigil</th>
+          <th class="border-b border-observatory-line-soft p-3 uppercase tracking-widest">Confidence</th>
+          <th class="border-b border-observatory-line-soft p-3 uppercase tracking-widest">Distance</th>
+          <th class="border-b border-observatory-line-soft p-3 uppercase tracking-widest">Main risk</th>
+        </tr>
+      </thead>
+      <tbody>
+        {planets.map((planet) => (
+          <tr class="text-observatory-text">
+            <td class="border-b border-observatory-line-soft p-3">{String(planet.rank).padStart(2, '0')}</td>
+            <td class="border-b border-observatory-line-soft p-3 text-observatory-white">{planet.pl_name}</td>
+            <td class="border-b border-observatory-line-soft p-3">{fmtScore(planet.composite_score)}</td>
+            <td class="border-b border-observatory-line-soft p-3">{fmtScore(planet.data_confidence_score, 1)}</td>
+            <td class="border-b border-observatory-line-soft p-3">{fmtDistance(planet.sy_dist_pc)}</td>
+            <td class="border-b border-observatory-line-soft p-3">{firstRisk(planet)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section>
