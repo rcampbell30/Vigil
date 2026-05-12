@@ -1,5 +1,5 @@
 [build]
-  command = "python generate_data.py && npm run build"
+  command = "npm run build"
   publish = "dist"
 
 [build.environment]
