@@ -1,0 +1,34 @@
+---
+interface Props {
+  siteMeta: any;
+}
+
+const { siteMeta } = Astro.props;
+---
+
+<header class="border-b border-observatory-line-soft py-16">
+  <div class="mx-auto max-w-6xl px-5">
+    <p class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-status-teal mb-4">
+      <span class="w-2 h-2 bg-status-teal rounded-full shadow-lg" style="box-shadow: 0 0 22px rgba(58, 247, 181, 0.55);"></span>
+      Exoplanet Habitability Index / SETI Targeting
+    </p>
+    
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-16 items-end">
+      <div class="md:col-span-2">
+        <h1 class="font-serif text-4xl md:text-5xl font-bold text-observatory-white mb-4 leading-tight">
+          Vigil —<br /><em class="text-status-teal italic">The Long Watch.</em>
+        </h1>
+        <p class="font-serif text-base text-observatory-text leading-relaxed max-w-2xl">
+          Vigil ranks confirmed exoplanets by evidence-adjusted habitability.
+          Unknown values reduce confidence. Hostile physics caps the score.
+          Nearby, well-measured, survivable worlds rise.
+        </p>
+      </div>
+      
+      <div class="border border-observatory-line-soft bg-gradient-to-b from-observatory-panel-2 to-observatory-panel p-4 rounded shadow-lg">
+        <span class="block text-xs font-bold uppercase tracking-widest text-observatory-dim mb-2">Current source</span>
+        <strong class="block text-observatory-white text-sm">{siteMeta.source || 'Loading...'}</strong>
+      </div>
+    </div>
+  </div>
+</header>
