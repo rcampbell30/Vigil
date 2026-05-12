@@ -1,0 +1,34 @@
+---
+interface Props {
+  totalScanned: number;
+  candidatesDisplayed: number;
+  rankableCandidates: number;
+  lastRefresh: string;
+  modelVersion?: string;
+}
+
+const {
+  totalScanned,
+  candidatesDisplayed,
+  rankableCandidates,
+  lastRefresh,
+  modelVersion = 'Evidence-adjusted v2',
+} = Astro.props;
+
+const stats = [
+  ['Confirmed planets scanned', totalScanned.toLocaleString()],
+  ['Candidates displayed', candidatesDisplayed.toLocaleString()],
+  ['Rankable candidates', rankableCandidates.toLocaleString()],
+  ['Last refresh', lastRefresh],
+  ['Scoring model', modelVersion],
+];
+---
+
+<section class="mx-auto grid max-w-6xl grid-cols-1 gap-3 px-5 py-6 sm:grid-cols-2 lg:grid-cols-5">
+  {stats.map(([label, value]) => (
+    <div class="min-h-24 border border-observatory-line-soft bg-observatory-panel/80 p-4">
+      <span class="block text-[10px] font-bold uppercase tracking-widest text-observatory-dim">{label}</span>
+      <strong class="mt-4 block text-lg text-observatory-white">{value}</strong>
+    </div>
+  ))}
+</section>
