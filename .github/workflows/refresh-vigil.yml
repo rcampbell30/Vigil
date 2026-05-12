@@ -19,6 +19,7 @@ on:
       - "astro.config.mjs"
       - "package.json"
       - "tailwind.config.mjs"
+      - "netlify.toml"
       - ".github/workflows/refresh-vigil.yml"
 
 permissions:
@@ -51,6 +52,17 @@ jobs:
 
       - name: Regenerate Astro data exports
         run: python generate_data.py
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Node dependencies
+        run: npm install
+
+      - name: Build Astro site
+        run: npm run build
 
       - name: Commit refreshed data and site
         uses: stefanzweifel/git-auto-commit-action@v5
