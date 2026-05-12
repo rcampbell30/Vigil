@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Node / Astro
+node_modules/
+dist/
+.astro/
+
+# Local environment files
+.env
+.env.local
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
