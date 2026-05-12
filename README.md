@@ -1,75 +1,85 @@
-Enhanced Wizard Set Utilities
-=============================
+# Vigil
 
-This package is a collection of utility functions designed to make everyday
-Python development simpler and more expressive.  Originally inspired by a
-"wizard set" of handy patterns (like using `max(items, key=rule)`), the
-package now includes an expanded suite of functions for working with sequences,
-iterables and dictionaries.  It includes wrappers for common built‑ins,
-helpers for flattening, grouping, chunking, merging, and more.
+**Vigil** is a lightweight Python monitoring/watchdog project for keeping an eye on files, folders, scripts, small systems, and repeated checks.
 
-Functions are carefully documented and each line of code carries an inline
-comment, making the implementation transparent and educational.  The module
-was authored by **Rory** — his name appears in the documentation as a
-playful note for the user who requested this work, but it is not part of the
-package name.
+The aim is simple: give a project a watchful layer that can notice when something changes, breaks, goes stale, or needs attention — without turning it into a heavy enterprise monitoring platform.
 
-### Installation
+## What Vigil is for
 
-The package is a simple folder containing Python files.  Copy the
-`wizardset_enhanced` directory into your project or install it as an editable
-dependency:
+Vigil is intended for small, practical monitoring tasks such as:
 
-```bash
-pip install -e path/to/wizardset_enhanced
+- Watching files or folders for changes
+- Checking whether expected files still exist
+- Spotting stale outputs or missed updates
+- Logging simple project events clearly
+- Running repeatable checks from a script or command line
+- Helping developers learn how monitoring, automation, and watchdog-style Python tools work
+
+## Project status
+
+This repository is currently an early-stage scaffold. The README defines the project direction and replaces an incorrect copied README from another project.
+
+The next step is to add the actual Python package/module structure and the first working watcher/check utilities.
+
+## Planned features
+
+- File and folder watching
+- Simple check functions for common project health tasks
+- Clear console output and optional log files
+- Small command-line interface
+- Beginner-readable Python with comments and docstrings
+- Tests for the core checks
+- Example scripts showing real use cases
+
+## Suggested structure
+
+```text
+Vigil/
+├── vigil/
+│   ├── __init__.py
+│   ├── watcher.py
+│   ├── checks.py
+│   └── logging_utils.py
+├── examples/
+│   └── watch_folder.py
+├── tests/
+│   └── test_checks.py
+├── README.md
+└── LICENSE
 ```
 
-### Usage
+## Example direction
 
-Import directly from the package or from the module.  All functions are
-exposed at the package level for convenience:
+Once the package is implemented, usage could look like this:
 
 ```python
-from wizardset_enhanced import best, flatten, group_by
+from vigil import watch_path
 
-print(best([1, 2, 3], lambda x: x))  # 3
-print(flatten([[1, 2], [3, 4]]))  # [1, 2, 3, 4]
-print(group_by(['hi', 'cat', 'dog'], len))  # {2: ['hi'], 3: ['cat', 'dog']}
+watch_path("./my-project", on_change=print)
 ```
 
-### Available Functions
+Or from the command line:
 
-| Function            | Description |
-|---------------------|-------------|
-| `best(items, rule)` | Return the item with the highest score according to a rule |
-| `worst(items, rule)` | Return the item with the lowest score according to a rule |
-| `rank(items, rule, reverse=False)` | Return a sorted list based on a rule |
-| `count_where(items, condition)` | Count items satisfying a condition |
-| `any_match(items, condition)` | Whether any item satisfies a condition |
-| `all_match(items, condition)` | Whether all items satisfy a condition |
-| `unique(items)` | Unique items preserving order |
-| `frequencies(items)` | Count occurrences of each distinct item |
-| `pair(left_items, right_items)` | Pair two iterables into list of tuples |
-| `numbered(items, start=0)` | Enumerate items from a starting number |
-| `average_score(items, rule)` | Average of scores computed by a rule |
-| `explain_best(items, rule)` | Explain the best and second best items |
-| `flatten(nested)` | Flatten nested iterables |
-| `chunk(items, size)` | Split items into chunks |
-| `group_by(items, key)` | Group items by a computed key |
-| `duplicates(items)` | List items appearing more than once |
-| `transpose(matrix)` | Transpose a matrix |
-| `map_values(items, func)` | Apply a function to each item |
-| `filter_values(items, condition)` | Filter items by condition |
-| `safe_get(mapping, keys, default=None)` | Safely get a nested value |
-| `merge(dict_a, dict_b)` | Shallow merge two dicts |
-| `nested_merge(dict_a, dict_b)` | Deep merge two dicts |
-| `intersection(seq1, seq2)` | Intersection of two sequences |
-| `difference(seq1, seq2)` | Items in seq1 not in seq2 |
-| `prefix_sum(numbers)` | Cumulative sum of numbers |
-| `flatten_dict(d, parent_key='', sep='.')` | Flatten nested dict keys |
-| `unflatten_dict(d, sep='.')` | Convert flattened dict to nested |
+```bash
+python -m vigil watch ./my-project
+```
 
-Each function includes docstrings and comments explaining how it works.  Open
-the source code to learn more about the implementation.
+These examples show the intended direction, not a finished API yet.
 
-Happy coding!
+## Roadmap
+
+1. Add the base `vigil` package folder
+2. Create a simple folder watcher
+3. Add basic health-check helpers
+4. Add CLI support
+5. Add examples
+6. Add tests
+7. Cut the first release once the core watcher works
+
+## Why the name
+
+A vigil is a watch kept over something important. That fits the purpose of the project: a small tool that quietly watches a project and alerts you when something changes or needs attention.
+
+## License
+
+MIT License.
