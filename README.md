@@ -1,84 +1,127 @@
-# Vigil
+# Vigil — The Long Watch
 
-**Vigil** is a lightweight Python monitoring/watchdog project for keeping an eye on files, folders, scripts, small systems, and repeated checks.
+**Vigil** is a static exoplanet habitability index and SETI-targeting dashboard.
 
-The aim is simple: give a project a watchful layer that can notice when something changes, breaks, goes stale, or needs attention — without turning it into a heavy enterprise monitoring platform.
+It ranks confirmed exoplanets across six physical habitability dimensions, with extra emphasis on an often underweighted filter: whether a planet is likely to keep a protective magnetic field and atmosphere over geological time.
 
-## What Vigil is for
+The generated site is a dark, starfield-style catalogue showing the current top candidates, their composite scores, and their individual score bars.
 
-Vigil is intended for small, practical monitoring tasks such as:
+## What it does
 
-- Watching files or folders for changes
-- Checking whether expected files still exist
-- Spotting stale outputs or missed updates
-- Logging simple project events clearly
-- Running repeatable checks from a script or command line
-- Helping developers learn how monitoring, automation, and watchdog-style Python tools work
+Vigil:
 
-## Project status
+- Fetches confirmed exoplanet data from the NASA Exoplanet Archive
+- Scores each planet across six habitability dimensions
+- Ranks the strongest candidates by weighted composite score
+- Generates a self-contained `index.html` suitable for GitHub Pages or any static host
+- Falls back to built-in sample data if the full NASA scrape has not been run yet
 
-This repository is currently an early-stage scaffold. The README defines the project direction and replaces an incorrect copied README from another project.
+## Scoring model
 
-The next step is to add the actual Python package/module structure and the first working watcher/check utilities.
+Each planet receives a 0–10 score across these dimensions:
 
-## Planned features
+| Dimension | Weight | Why it matters |
+|---|---:|---|
+| Magnetic field likelihood | 25% | A planet without a strong protective field can lose its atmosphere to stellar wind over geological time. |
+| Habitable zone position | 25% | Liquid water requires the right stellar flux and orbital distance. |
+| Rocky surface likelihood | 20% | Life as we know it needs a solid or liquid surface, not a mini-Neptune envelope. |
+| Stellar stability | 15% | Stable, long-lived stars are better candidates than short-lived or flare-heavy stars. |
+| System age | 10% | Complex life took billions of years on Earth, so very young systems are less promising. |
+| Atmosphere retention | 5% | Escape velocity affects whether a planet can hold onto an atmosphere. |
 
-- File and folder watching
-- Simple check functions for common project health tasks
-- Clear console output and optional log files
-- Small command-line interface
-- Beginner-readable Python with comments and docstrings
-- Tests for the core checks
-- Example scripts showing real use cases
+Missing data is handled transparently. If a planet lacks a required value for one dimension, that dimension is skipped and the available weights are redistributed instead of inventing a score.
 
-## Suggested structure
+## Project files
 
 ```text
 Vigil/
-├── vigil/
-│   ├── __init__.py
-│   ├── watcher.py
-│   ├── checks.py
-│   └── logging_utils.py
-├── examples/
-│   └── watch_folder.py
-├── tests/
-│   └── test_checks.py
-├── README.md
-└── LICENSE
+├── index.html          # Generated static website
+├── scraper.py          # Downloads confirmed planet data from NASA
+├── habitability.py     # Scores planets across the six dimensions
+├── generate_site.py    # Builds index.html from scraped or sample data
+├── data/               # Created when scraper.py is run
+└── README.md
 ```
 
-## Example direction
+## How it works
 
-Once the package is implemented, usage could look like this:
-
-```python
-from vigil import watch_path
-
-watch_path("./my-project", on_change=print)
-```
-
-Or from the command line:
+### 1. Scrape NASA data
 
 ```bash
-python -m vigil watch ./my-project
+python scraper.py
 ```
 
-These examples show the intended direction, not a finished API yet.
+This downloads confirmed exoplanet data from the NASA Exoplanet Archive TAP service and saves:
 
-## Roadmap
+```text
+data/exoplanets_YYYY-MM-DD.csv
+data/latest.csv
+```
 
-1. Add the base `vigil` package folder
-2. Create a simple folder watcher
-3. Add basic health-check helpers
-4. Add CLI support
-5. Add examples
-6. Add tests
-7. Cut the first release once the core watcher works
+### 2. Generate the site
 
-## Why the name
+```bash
+python generate_site.py
+```
 
-A vigil is a watch kept over something important. That fits the purpose of the project: a small tool that quietly watches a project and alerts you when something changes or needs attention.
+This reads `data/latest.csv`, scores the planets using `habitability.py`, and writes a fresh `index.html`.
+
+If `data/latest.csv` does not exist, the generator uses built-in sample data so the site still renders from a fresh clone.
+
+### 3. Deploy
+
+Because the output is a plain static HTML file, it can be deployed with:
+
+- GitHub Pages
+- Netlify
+- Vercel
+- Cloudflare Pages
+- Any static web host
+
+## Example workflow
+
+```bash
+git clone https://github.com/rcampbell30/Vigil.git
+cd Vigil
+python scraper.py
+python generate_site.py
+```
+
+Then open `index.html` locally or publish the repo through GitHub Pages.
+
+## Current site copy
+
+The live page presents Vigil as:
+
+> A ranked catalogue of confirmed exoplanets scored across six physical habitability dimensions — including magnetic field likelihood, the most underappreciated filter in the search for life.
+
+## Why magnetic fields matter
+
+Most habitability rankings focus heavily on distance from the star and surface temperature. Vigil gives magnetic-field likelihood equal importance to habitable-zone position because a world in the right orbit can still be sterile if stellar wind strips its atmosphere.
+
+That makes the project less of a generic “Earth similarity” list and more of a long-term survivability filter for future SETI and biosignature targets.
+
+## Data source
+
+Planet data comes from the NASA Exoplanet Archive, using the `pscomppars` table from its TAP service.
+
+NASA Exoplanet Archive: https://exoplanetarchive.ipac.caltech.edu/
+
+## Status
+
+Early but functional.
+
+The repo already contains the core scraper, scoring model, and site generator. The current `index.html` can be served immediately, while `scraper.py` and `generate_site.py` can regenerate it from fresh NASA data.
+
+## Next improvements
+
+- Add a GitHub Actions workflow to refresh the NASA data yearly
+- Remove duplicate `- Copy.py` files once the clean versions are confirmed
+- Add a proper `requirements.txt` if external dependencies are introduced later
+- Add tests for the scoring functions
+- Add a methodology page explaining each scoring formula in more detail
+- Add CSV export of the ranked results
+- Add filters by distance, star type, discovery method, and missing-data quality
 
 ## License
 
