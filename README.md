@@ -2,17 +2,19 @@
 
 **Vigil** is a static exoplanet habitability index and SETI-targeting dashboard.
 
-It ranks confirmed exoplanets across six physical habitability dimensions, with extra emphasis on an often underweighted filter: whether a planet is likely to keep a protective magnetic field and atmosphere over geological time.
+It ranks confirmed exoplanets using physical habitability scores, evidence weighting, data-confidence checks, and hard guardrails for obvious false positives such as lava worlds, ultra-short-period planets, gas-giant-size bodies, and poorly measured candidates.
 
-The generated site is a dark, starfield-style catalogue showing the current top candidates, their composite scores, and their individual score bars.
+The generated site is a dark, starfield-style catalogue showing the current top candidates, their Vigil scores, confidence, risk flags, and individual score bars.
 
 ## What it does
 
 Vigil:
 
 - Fetches confirmed exoplanet data from the NASA Exoplanet Archive
-- Scores each planet across six habitability dimensions
-- Ranks the strongest candidates by weighted composite score
+- Scores each planet across core habitability dimensions
+- Penalises missing data instead of letting it inflate the rank
+- Caps obviously uninhabitable worlds using orbital period, radius, and equilibrium temperature guardrails
+- Ranks the strongest evidence-adjusted candidates by final Vigil score
 - Generates a self-contained `index.html` suitable for GitHub Pages or any static host
 - Falls back to built-in sample data if the full NASA scrape has not been run yet
 
@@ -20,16 +22,35 @@ Vigil:
 
 Each planet receives a 0–10 score across these dimensions:
 
-| Dimension | Weight | Why it matters |
-|---|---:|---|
-| Magnetic field likelihood | 25% | A planet without a strong protective field can lose its atmosphere to stellar wind over geological time. |
-| Habitable zone position | 25% | Liquid water requires the right stellar flux and orbital distance. |
-| Rocky surface likelihood | 20% | Life as we know it needs a solid or liquid surface, not a mini-Neptune envelope. |
-| Stellar stability | 15% | Stable, long-lived stars are better candidates than short-lived or flare-heavy stars. |
-| System age | 10% | Complex life took billions of years on Earth, so very young systems are less promising. |
-| Atmosphere retention | 5% | Escape velocity affects whether a planet can hold onto an atmosphere. |
+| Dimension | Weight |
+|---|---:|
+| Magnetic field likelihood | 25% |
+| Habitable zone position | 25% |
+| Rocky surface likelihood | 20% |
+| Stellar stability | 15% |
+| System age | 10% |
+| Atmosphere retention | 5% |
 
-Missing data is handled transparently. If a planet lacks a required value for one dimension, that dimension is skipped and the available weights are redistributed instead of inventing a score.
+The public ranking uses more than the raw dimension score.
+
+```text
+Vigil Score = evidence score × data confidence factor, then physical caps
+```
+
+This means a planet with missing mass, orbit, atmosphere-retention, or habitable-zone data cannot float to the top just because the model skipped difficult fields.
+
+## Guardrails
+
+Vigil now applies extra sanity checks for:
+
+- Ultra-short orbital periods
+- Extreme equilibrium temperatures
+- Gas-giant-size or mini-Neptune-size radii
+- Low data confidence
+- Missing habitable-zone evidence
+- Missing mass or radius data
+
+These guardrails were added after the first full NASA scrape exposed a failure case: a very hot, close-in planet could rank too highly if several hostile or unknown dimensions were skipped.
 
 ## Project files
 
@@ -37,7 +58,7 @@ Missing data is handled transparently. If a planet lacks a required value for on
 Vigil/
 ├── index.html          # Generated static website
 ├── scraper.py          # Downloads confirmed planet data from NASA
-├── habitability.py     # Scores planets across the six dimensions
+├── habitability.py     # Scores planets and applies evidence/guardrail logic
 ├── generate_site.py    # Builds index.html from scraped or sample data
 ├── data/               # Created when scraper.py is run
 └── README.md
@@ -78,7 +99,20 @@ Because the output is a plain static HTML file, it can be deployed with:
 - Cloudflare Pages
 - Any static web host
 
-## Example workflow
+## GitHub Actions
+
+The repo includes a workflow that can refresh Vigil automatically.
+
+It runs:
+
+```bash
+python scraper.py
+python generate_site.py
+```
+
+The workflow can be triggered manually from the Actions tab and is also scheduled to run once a year.
+
+## Example local workflow
 
 ```bash
 git clone https://github.com/rcampbell30/Vigil.git
@@ -88,12 +122,6 @@ python generate_site.py
 ```
 
 Then open `index.html` locally or publish the repo through GitHub Pages.
-
-## Current site copy
-
-The live page presents Vigil as:
-
-> A ranked catalogue of confirmed exoplanets scored across six physical habitability dimensions — including magnetic field likelihood, the most underappreciated filter in the search for life.
 
 ## Why magnetic fields matter
 
@@ -111,17 +139,16 @@ NASA Exoplanet Archive: https://exoplanetarchive.ipac.caltech.edu/
 
 Early but functional.
 
-The repo already contains the core scraper, scoring model, and site generator. The current `index.html` can be served immediately, while `scraper.py` and `generate_site.py` can regenerate it from fresh NASA data.
+The repo contains the core scraper, scoring model, evidence-adjusted ranking logic, and static site generator. The current `index.html` can be served immediately, while `scraper.py` and `generate_site.py` can regenerate it from fresh NASA data.
 
 ## Next improvements
 
-- Add a GitHub Actions workflow to refresh the NASA data yearly
-- Remove duplicate `- Copy.py` files once the clean versions are confirmed
-- Add a proper `requirements.txt` if external dependencies are introduced later
-- Add tests for the scoring functions
-- Add a methodology page explaining each scoring formula in more detail
+- Add tests for the scoring and guardrail functions
+- Add a detailed methodology page explaining each scoring formula
 - Add CSV export of the ranked results
-- Add filters by distance, star type, discovery method, and missing-data quality
+- Add filters by distance, star type, discovery method, and confidence level
+- Add separate Habitability Score and SETI Priority Score
+- Add Earth Transit Zone and observability bonuses later
 
 ## License
 
