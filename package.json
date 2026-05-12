@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "python generate_data.py && astro dev",
     "build": "python generate_data.py && astro build",
     "preview": "astro preview",
     "generate:data": "python generate_data.py",
