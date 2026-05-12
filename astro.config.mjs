@@ -8,4 +8,7 @@ export default defineConfig({
   base: isGitHubPages ? '/Vigil' : '/',
   integrations: [tailwind()],
   output: 'static',
+  build: {
+    inlineStylesheets: 'always',
+  },
 });
