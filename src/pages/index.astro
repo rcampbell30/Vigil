@@ -1,0 +1,76 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import StatsBar from '../components/StatsBar.astro';
+import TargetCard from '../components/TargetCard.astro';
+import ComparisonTable from '../components/ComparisonTable.astro';
+import Methodology from '../components/Methodology.astro';
+
+// Load data at build time
+let candidates = [];
+let top10 = [];
+let siteMeta = {};
+
+try {
+  const candidatesFile = await import('../../../public/data/ranked_candidates.json', { assert: { type: 'json' } });
+  candidates = candidatesFile.default || [];
+  
+  const top10File = await import('../../../public/data/top_10.json', { assert: { type: 'json' } });
+  top10 = top10File.default || [];
+  
+  const metaFile = await import('../../../public/data/site_meta.json', { assert: { type: 'json' } });
+  siteMeta = metaFile.default || {};
+} catch (e) {
+  console.warn('Data files not found; using fallback', e);
+  candidates = [];
+  top10 = [];
+  siteMeta = {
+    source: 'No data available',
+    total_planets_scanned: 0,
+    rankable_candidates: 0,
+    candidates_exported: 0,
+    scoring_model_version: 'Evidence-adjusted v2',
+  };
+}
+
+// Ensure we have top 10
+if (top10.length === 0 && candidates.length > 0) {
+  top10 = candidates.slice(0, 10);
+}
+
+// Add rank numbers
+const topWithRanks = top10.map((planet, i) => ({ ...planet, rank: i + 1 }));
+const candidatesWithRanks = candidates.map((planet, i) => ({ ...planet, rank: i + 1 }));
+---
+
+<Layout title="Vigil — The Long Watch">
+  <Hero siteMeta={siteMeta} />
+  
+  <StatsBar 
+    totalScanned={siteMeta.total_planets_scanned || 0}
+    candidatesDisplayed={top10.length}
+    rankableCandidates={siteMeta.rankable_candidates || 0}
+    lastRefresh={siteMeta.generated_date || 'Unknown'}
+    modelVersion={siteMeta.scoring_model_version}
+  />
+
+  <section class="mx-auto max-w-6xl px-5 py-8">
+    <h2 class="text-xs font-bold uppercase tracking-widest text-observatory-muted mb-4">Top 10 evidence-adjusted target dossiers</h2>
+    <div class="grid gap-4">
+      {topWithRanks.map((planet) => (
+        <TargetCard planet={planet} />
+      ))}
+    </div>
+  </section>
+
+  <ComparisonTable planets={topWithRanks} />
+  <Methodology />
+
+  <footer class="mx-auto max-w-6xl px-5 py-8 mt-8 border-t border-observatory-line-soft text-observatory-dim text-xs">
+    <div class="flex flex-wrap justify-between gap-4">
+      <span>Data: <a href="https://exoplanetarchive.ipac.caltech.edu" target="_blank" class="text-status-teal hover:underline">NASA Exoplanet Archive</a></span>
+      <span>Model: Evidence-adjusted v2</span>
+      <span>Vigil — built by Rory · runs forever</span>
+    </div>
+  </footer>
+</Layout>
