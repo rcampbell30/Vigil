@@ -5,13 +5,6 @@ interface Props {
 
 const { planet } = Astro.props;
 
-const scoreColor = (score: number | null | undefined) => {
-  if (score === null || score === undefined) return '#334155';
-  if (score >= 7.5) return '#3af7b5';
-  if (score >= 5.0) return '#f7c948';
-  return '#f75a3a';
-};
-
 const fmtScore = (score: number | null | undefined, digits = 1) =>
   score === null || score === undefined ? 'N/A' : Number(score).toFixed(digits);
 
@@ -21,83 +14,61 @@ const fmtDistance = (distance: number | null | undefined) =>
 const splitLabels = (raw: string | undefined) =>
   !raw || raw === 'none' ? [] : raw.split(',').map((x) => x.trim()).filter(Boolean);
 
-const scoreBars = [
-  ['Magnetic Field', planet.score_magnetic_field, true],
-  ['Habitable Zone', planet.score_habitable_zone, false],
-  ['Thermal Plausibility', planet.score_thermal_plausibility, false],
-  ['Rocky Surface', planet.score_rocky_likelihood, false],
-  ['Stellar Stability', planet.score_stellar_stability, false],
-  ['System Age', planet.score_system_age, false],
-  ['Atmos. Retention', planet.score_atmosphere_hold, false],
-  ['Data Confidence', planet.data_confidence_score, false],
+const bars = [
+  ['Magnetic Field', planet.score_magnetic_field],
+  ['Habitable Zone', planet.score_habitable_zone],
+  ['Thermal Plausibility', planet.score_thermal_plausibility],
+  ['Rocky Surface', planet.score_rocky_likelihood],
+  ['Stellar Stability', planet.score_stellar_stability],
+  ['System Age', planet.score_system_age],
+  ['Atmos. Retention', planet.score_atmosphere_hold],
+  ['Data Confidence', planet.data_confidence_score],
 ];
 
-const riskLabels = splitLabels(planet.risk_flags);
-const missingLabels = splitLabels(planet.missing_data).map((label) => `missing: ${label}`);
-const badges = [...riskLabels, ...missingLabels].slice(0, 7);
-const color = scoreColor(planet.composite_score);
-const dash = planet.composite_score ? Math.max(0, Math.min(251.3, 251.3 * Number(planet.composite_score) / 10)) : 0;
+const badges = [...splitLabels(planet.risk_flags), ...splitLabels(planet.missing_data).map((x) => `missing: ${x}`)].slice(0, 7);
 ---
 
-<article class="grid overflow-hidden border border-observatory-line-soft bg-gradient-to-b from-observatory-panel-2/95 to-observatory-panel shadow-xl md:grid-cols-[84px_1fr]" style={`border-left: 4px solid ${color}`}>
-  <div class="flex items-center justify-center border-b border-observatory-line-soft bg-white/[0.015] py-4 md:border-b-0 md:border-r">
-    <div class="text-center">
-      <span class="block text-[10px] uppercase tracking-widest text-observatory-dim">Rank</span>
-      <strong class="block text-2xl text-observatory-white">{String(planet.rank).padStart(2, '0')}</strong>
+<article class="border border-observatory-line-soft bg-observatory-panel/90 p-5 shadow-xl">
+  <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+    <div>
+      <p class="text-xs font-bold uppercase tracking-widest text-status-teal">Rank {String(planet.rank).padStart(2, '0')}</p>
+      <h3 class="mt-1 font-serif text-2xl font-bold text-observatory-white">{planet.pl_name}</h3>
+      <p class="text-xs text-observatory-muted">Host: {planet.hostname} · Distance: {fmtDistance(planet.sy_dist_pc)} · Discovery: {planet.disc_year || 'unknown'}</p>
+    </div>
+    <div class="border border-observatory-line-soft bg-observatory-bg/70 px-4 py-3 text-center">
+      <span class="block text-[10px] uppercase tracking-widest text-observatory-dim">Vigil Score</span>
+      <strong class="text-2xl text-status-teal">{fmtScore(planet.composite_score, 2)}</strong>
     </div>
   </div>
 
-  <div class="p-5">
-    <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-      <div>
-        <p class="mb-1 text-[10px] font-bold uppercase tracking-widest text-status-teal">{planet.rankable ? 'ranked target' : 'watchlist target'}</p>
-        <h3 class="font-serif text-2xl font-bold text-observatory-white">{planet.pl_name}</h3>
-        <p class="text-xs text-observatory-muted">Host: {planet.hostname} · Distance: {fmtDistance(planet.sy_dist_pc)} · Discovery: {planet.disc_year || 'unknown'}</p>
-      </div>
+  <div class="my-4 grid grid-cols-2 gap-2 md:grid-cols-4">
+    <div class="border border-observatory-line-soft p-3"><span class="block text-[10px] uppercase tracking-widest text-observatory-dim">Potential</span><strong>{fmtScore(planet.evidence_score, 2)}</strong></div>
+    <div class="border border-observatory-line-soft p-3"><span class="block text-[10px] uppercase tracking-widest text-observatory-dim">Confidence</span><strong>{fmtScore(planet.data_confidence_score)}</strong></div>
+    <div class="border border-observatory-line-soft p-3"><span class="block text-[10px] uppercase tracking-widest text-observatory-dim">Ceiling</span><strong>{fmtScore(planet.habitability_ceiling)}</strong></div>
+    <div class="border border-observatory-line-soft p-3"><span class="block text-[10px] uppercase tracking-widest text-observatory-dim">Distance</span><strong>{fmtDistance(planet.sy_dist_pc)}</strong></div>
+  </div>
 
-      <div class="shrink-0 text-center">
-        <svg viewBox="0 0 100 100" width="104" height="104" aria-hidden="true">
-          <circle cx="50" cy="50" r="40" fill="none" stroke="#172033" stroke-width="8"></circle>
-          <circle cx="50" cy="50" r="40" fill="none" stroke={color} stroke-width="8" stroke-dasharray={`${dash.toFixed(1)} 251.3`} stroke-dashoffset="62.8" stroke-linecap="round"></circle>
-          <text x="50" y="50" text-anchor="middle" dy="0.35em" font-family="JetBrains Mono, monospace" font-size="16" fill={color} font-weight="700">{fmtScore(planet.composite_score, 2)}</text>
-        </svg>
-        <p class="text-[10px] uppercase tracking-widest text-observatory-dim">Vigil Score</p>
-      </div>
-    </div>
+  <p class="my-4 border-l-2 border-status-teal pl-3 font-serif text-sm leading-7 text-observatory-text">
+    {planet.rank_explanation || 'Balanced candidate with ranking driven by measured potential, confidence, and physical caps.'}
+  </p>
 
-    <div class="my-4 grid grid-cols-2 gap-2 md:grid-cols-4">
-      <Metric label="Potential" value={fmtScore(planet.evidence_score, 2)} />
-      <Metric label="Confidence" value={fmtScore(planet.data_confidence_score)} />
-      <Metric label="Ceiling" value={fmtScore(planet.habitability_ceiling)} />
-      <Metric label="Distance" value={fmtDistance(planet.sy_dist_pc)} />
-    </div>
+  <div class="mb-4 flex flex-wrap gap-2">
+    {badges.length ? badges.map((badge) => <span class="rounded-full border border-status-amber/30 bg-status-amber/10 px-2 py-1 text-[10px] text-status-amber">{badge}</span>) : <span class="rounded-full border border-status-teal/30 bg-status-teal/10 px-2 py-1 text-[10px] text-status-teal">no major flags</span>}
+  </div>
 
-    <p class="my-4 border-l-2 pl-3 font-serif text-sm leading-7 text-observatory-text" style={`border-color: ${color}`}>
-      {planet.rank_explanation || 'Balanced candidate with ranking driven by measured potential, confidence, and physical caps.'}
-    </p>
-
-    <div class="mb-4 flex flex-wrap gap-2">
-      {badges.length ? badges.map((badge) => (
-        <span class="rounded-full border border-status-amber/30 bg-status-amber/10 px-2 py-1 text-[10px] text-status-amber">{badge}</span>
-      )) : (
-        <span class="rounded-full border border-status-teal/30 bg-status-teal/10 px-2 py-1 text-[10px] text-status-teal">no major flags</span>
-      )}
-    </div>
-
-    <div class="grid gap-x-6 md:grid-cols-2">
-      {scoreBars.map(([label, score, isMagnetic]) => {
-        const width = score === null || score === undefined ? 0 : Math.max(0, Math.min(100, Number(score) * 10));
-        const barColor = isMagnetic ? '#ff8c42' : scoreColor(score as number | null | undefined);
-        return (
-          <div class="mb-2 grid grid-cols-[150px_1fr_42px] items-center gap-2">
-            <span class="text-[10px] uppercase tracking-wider text-observatory-dim">{label}{isMagnetic ? ' ★' : ''}</span>
-            <div class="h-1.5 overflow-hidden rounded-full bg-observatory-panel-3">
-              <div class="h-full rounded-full" style={`width: ${width}%; background: ${barColor}`}></div>
-            </div>
-            <span class="text-right text-xs font-bold" style={`color: ${barColor}`}>{fmtScore(score as number | null | undefined)}</span>
+  <div class="grid gap-x-6 md:grid-cols-2">
+    {bars.map(([label, score]) => {
+      const numericScore = score === null || score === undefined ? null : Number(score);
+      const width = numericScore === null ? 0 : Math.max(0, Math.min(100, numericScore * 10));
+      return (
+        <div class="mb-2 grid grid-cols-[150px_1fr_42px] items-center gap-2">
+          <span class="text-[10px] uppercase tracking-wider text-observatory-dim">{label}</span>
+          <div class="h-1.5 overflow-hidden rounded-full bg-observatory-panel-3">
+            <div class="h-full rounded-full bg-status-teal" style={`width: ${width}%`}></div>
           </div>
-        );
-      })}
-    </div>
+          <span class="text-right text-xs font-bold text-status-teal">{fmtScore(numericScore)}</span>
+        </div>
+      );
+    })}
   </div>
 </article>
