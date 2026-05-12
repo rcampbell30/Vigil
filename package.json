@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "python generate_data.py && astro build",
     "preview": "astro preview",
     "generate:data": "python generate_data.py",
     "test:python": "python -m pytest"
