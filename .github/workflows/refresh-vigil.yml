@@ -15,11 +15,6 @@ on:
       - "generate_data.py"
       - "requirements.txt"
       - "tests/**"
-      - "src/**"
-      - "astro.config.mjs"
-      - "package.json"
-      - "tailwind.config.mjs"
-      - "netlify.toml"
       - ".github/workflows/refresh-vigil.yml"
 
 permissions:
@@ -45,9 +40,11 @@ jobs:
         run: python -m pytest
 
       - name: Fetch latest NASA exoplanet data
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: python scraper.py
 
       - name: Regenerate static HTML site
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: python generate_site.py
 
       - name: Regenerate Astro data exports
@@ -65,6 +62,7 @@ jobs:
         run: npm run build
 
       - name: Commit refreshed data and site
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Refresh Vigil exoplanet index"
