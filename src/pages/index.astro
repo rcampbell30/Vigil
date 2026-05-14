@@ -2,8 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import StatsBar from '../components/StatsBar.astro';
+import TargetSpotlight from '../components/TargetSpotlight.astro';
 import TargetCard from '../components/TargetCard.astro';
 import ComparisonTable from '../components/ComparisonTable.astro';
+import SourceMatrix from '../components/SourceMatrix.astro';
 import Methodology from '../components/Methodology.astro';
 
 import candidatesData from '../../public/data/ranked_candidates.json';
@@ -25,6 +27,13 @@ if (top10.length === 0 && candidates.length > 0) {
 }
 
 const topWithRanks = top10.map((planet, i) => ({ ...planet, rank: i + 1 }));
+const candidatesWithRanks = candidates.map((planet, i) => ({ ...planet, rank: i + 1 }));
+const topPlanet = topWithRanks[0];
+const safestPlanet = candidatesWithRanks.find((planet) => (!planet.risk_flags || planet.risk_flags === 'none') && planet.rankable) || topPlanet;
+const nearestPlanet = [...candidatesWithRanks]
+  .filter((planet) => planet.rankable && planet.sy_dist_pc !== null && planet.sy_dist_pc !== undefined && Number(planet.composite_score || 0) >= 5)
+  .sort((a, b) => Number(a.sy_dist_pc) - Number(b.sy_dist_pc))[0] || topPlanet;
+const wildcardPlanet = candidatesWithRanks.find((planet) => planet.rankable && planet.missing_data && planet.missing_data !== 'none') || topWithRanks.find((planet) => planet.risk_flags && planet.risk_flags !== 'none') || topPlanet;
 ---
 
 <Layout title="Vigil — The Long Watch">
@@ -38,8 +47,23 @@ const topWithRanks = top10.map((planet, i) => ({ ...planet, rank: i + 1 }));
     modelVersion={siteMeta.scoring_model_version}
   />
 
-  <section class="mx-auto max-w-6xl px-5 py-8">
-    <h2 class="mb-4 text-xs font-bold uppercase tracking-widest text-observatory-muted">Top 10 evidence-adjusted target dossiers</h2>
+  <TargetSpotlight
+    topPlanet={topPlanet}
+    safestPlanet={safestPlanet}
+    nearestPlanet={nearestPlanet}
+    wildcardPlanet={wildcardPlanet}
+  />
+
+  <section class="mx-auto max-w-6xl px-5 py-8" id="targets">
+    <div class="mb-5 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-widest text-status-teal">Target dossiers</p>
+        <h2 class="mt-2 font-serif text-3xl font-bold text-observatory-white">Top 10 evidence-adjusted worlds</h2>
+      </div>
+      <p class="max-w-xl text-sm leading-7 text-observatory-muted">
+        Each dossier explains what lifted the planet, what capped it, and which missing or hostile values affected the final score.
+      </p>
+    </div>
     <div class="grid gap-4">
       {topWithRanks.map((planet) => (
         <TargetCard planet={planet} />
@@ -48,13 +72,14 @@ const topWithRanks = top10.map((planet, i) => ({ ...planet, rank: i + 1 }));
   </section>
 
   <ComparisonTable planets={topWithRanks} />
+  <SourceMatrix />
   <Methodology />
 
   <footer class="mx-auto mt-8 max-w-6xl border-t border-observatory-line-soft px-5 py-8 text-xs text-observatory-dim">
     <div class="flex flex-wrap justify-between gap-4">
-      <span>Data: <a href="https://exoplanetarchive.ipac.caltech.edu" target="_blank" class="text-status-teal hover:underline">NASA Exoplanet Archive</a></span>
+      <span>Data baseline: <a href="https://exoplanetarchive.ipac.caltech.edu" target="_blank" rel="noopener noreferrer" class="text-status-teal hover:underline">NASA Exoplanet Archive</a></span>
       <span>Model: Evidence-adjusted v2</span>
-      <span>Vigil — built by Rory · runs forever</span>
+      <span>Vigil — built by Rory · watches candidate worlds without pretending certainty</span>
     </div>
   </footer>
 </Layout>
