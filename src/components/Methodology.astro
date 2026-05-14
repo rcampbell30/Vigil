@@ -1,25 +1,59 @@
 ---
-const sections = [
+const scoringSections = [
   ['Magnetic field likelihood', 'Estimated from mass, density proxy, tidal-locking risk, and system age. Vigil weights this highly because atmospheric survival depends on long-term shielding.'],
   ['Habitable zone score', 'Computed from stellar luminosity and orbital distance when both are available. The score peaks near the conservative liquid-water zone.'],
-  ['Thermal guardrail', 'Known equilibrium temperature is used as a sanity check. Very hot or cold planets are capped even when other values look promising.'],
-  ['Rocky surface likelihood', 'Planet radius is used to penalise likely mini-Neptunes, gas-rich worlds, and giant planets.'],
-  ['Data confidence', 'Missing values reduce the final score. Unknown does not count as good evidence.'],
-  ['Physical caps', 'Ultra-short orbits, extreme temperatures, oversized radii, and weak evidence apply hard ceilings to the final ranking.'],
+  ['Thermal plausibility', 'Known equilibrium temperature acts as a sanity check. Very hot or cold planets are capped even when other values look promising.'],
+  ['Rocky surface likelihood', 'Planet radius and mass are used to penalise likely mini-Neptunes, gas-rich worlds and giant planets.'],
+  ['Stellar stability', 'Host-star temperature and M-dwarf risk are used to reduce confidence where flare activity or tidal locking may dominate the surface environment.'],
+  ['System age', 'Very young systems may be unstable, while older systems receive more long-term survivability credit when other values support it.'],
+  ['Atmosphere retention', 'Mass, radius and star context are used as rough proxies for whether an atmosphere could plausibly persist.'],
+  ['Data confidence', 'Missing values reduce the final score. Unknown does not count as favourable evidence.'],
+  ['Physical caps', 'Ultra-short orbits, extreme temperatures, oversized radii and weak evidence apply hard ceilings to the final ranking.'],
+];
+
+const formulaSteps = [
+  ['1', 'Score measured dimensions', 'Each planet receives component scores across magnetic-field likelihood, habitable-zone position, rocky likelihood, thermal plausibility, stellar stability, age and atmosphere retention.'],
+  ['2', 'Apply evidence weighting', 'The model gives extra importance to long-term survivability, not just Earth-size similarity.'],
+  ['3', 'Reduce for missing data', 'A candidate cannot win simply because important hostile or unknown values are absent.'],
+  ['4', 'Apply physical guardrails', 'Obviously hostile worlds are capped even if a partial formula score looks attractive.'],
+  ['5', 'Rank and explain', 'The final leaderboard includes the score, confidence, missing values, risk flags and a plain-English rank explanation.'],
 ];
 ---
 
-<section class="mx-auto max-w-6xl px-5 py-10">
-  <h2 class="mb-4 text-xs font-bold uppercase tracking-widest text-observatory-muted">Scoring methodology</h2>
-  <div class="grid gap-3 md:grid-cols-2">
-    {sections.map(([title, body]) => (
+<section id="methodology" class="mx-auto max-w-6xl px-5 py-12" aria-labelledby="methodology-title">
+  <div class="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <p class="text-xs font-bold uppercase tracking-widest text-status-teal">Scoring methodology</p>
+      <h2 id="methodology-title" class="mt-2 font-serif text-3xl font-bold text-observatory-white">A ranking model that punishes false certainty.</h2>
+    </div>
+    <p class="max-w-xl text-sm leading-7 text-observatory-muted">
+      Vigil does not claim these planets are inhabited. It ranks confirmed exoplanets by available evidence, physical plausibility and usefulness for long-term SETI or biosignature prioritisation.
+    </p>
+  </div>
+
+  <div class="mb-8 grid gap-4 lg:grid-cols-5">
+    {formulaSteps.map(([step, title, body]) => (
+      <article class="border border-observatory-line-soft bg-observatory-panel/80 p-4">
+        <div class="mb-4 inline-flex h-8 w-8 items-center justify-center border border-status-teal/30 bg-status-teal/10 text-xs font-bold text-status-teal">{step}</div>
+        <h3 class="font-serif text-base font-bold text-observatory-white">{title}</h3>
+        <p class="mt-2 text-xs leading-6 text-observatory-muted">{body}</p>
+      </article>
+    ))}
+  </div>
+
+  <div class="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+    {scoringSections.map(([title, body]) => (
       <details class="border border-observatory-line-soft bg-observatory-panel/80 p-4">
-        <summary class="cursor-pointer font-serif text-observatory-white">{title}</summary>
+        <summary class="cursor-pointer font-serif text-observatory-white focus:outline-none focus:ring-2 focus:ring-status-teal">{title}</summary>
         <p class="mt-3 text-sm leading-7 text-observatory-muted">{body}</p>
       </details>
     ))}
   </div>
-  <p class="mt-5 max-w-3xl font-serif text-sm leading-7 text-observatory-muted">
-    Vigil does not claim these planets are inhabited. It ranks confirmed exoplanets by available evidence, physical plausibility, and usefulness for long-term SETI or biosignature prioritisation.
-  </p>
+
+  <div class="mt-8 border border-status-amber/30 bg-status-amber/10 p-5">
+    <h3 class="font-serif text-xl font-bold text-observatory-white">Important interpretation rule</h3>
+    <p class="mt-3 text-sm leading-7 text-observatory-text">
+      A high Vigil score means “worth watching”, not “Earth twin” or “life confirmed”. A lower-scoring planet can still be scientifically important if it is easier to observe, better documented, or useful for testing a specific hypothesis.
+    </p>
+  </div>
 </section>
