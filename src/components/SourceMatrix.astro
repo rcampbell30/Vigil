@@ -1,0 +1,92 @@
+---
+const sources = [
+  {
+    name: 'NASA Exoplanet Archive',
+    role: 'Baseline confirmed-planet catalogue',
+    status: 'Active source',
+    effect: 'Current winner and primary score table come from this dataset.',
+  },
+  {
+    name: 'Open Exoplanet Catalogue',
+    role: 'Open catalogue cross-check',
+    status: 'Planned comparison',
+    effect: 'Useful for alias matching and spotting parameter disagreements.',
+  },
+  {
+    name: 'Extrasolar Planets Encyclopaedia',
+    role: 'Independent catalogue comparison',
+    status: 'Planned comparison',
+    effect: 'Can confirm whether NASA-only rankings are stable across catalogues.',
+  },
+  {
+    name: 'SIMBAD / CDS / VizieR',
+    role: 'Host-star identifiers and literature tables',
+    status: 'Planned enrichment',
+    effect: 'Adds provenance, aliases, host-star context and paper-level traceability.',
+  },
+  {
+    name: 'Gaia-derived host-star data',
+    role: 'Distance, brightness and stellar context',
+    status: 'Planned enrichment',
+    effect: 'Improves observability scoring and host-star confidence.',
+  },
+  {
+    name: 'Specialist rocky-HZ catalogues',
+    role: 'Habitability shortlist comparison',
+    status: 'Planned validation',
+    effect: 'Shows whether Vigil agrees with specialist habitable-zone literature.',
+  },
+];
+---
+
+<section class="mx-auto max-w-6xl px-5 py-10" aria-labelledby="source-matrix-title">
+  <div class="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <p class="text-xs font-bold uppercase tracking-widest text-status-cyan">Source intelligence layer</p>
+      <h2 id="source-matrix-title" class="mt-2 font-serif text-3xl font-bold text-observatory-white">The next winner may change when the evidence base expands.</h2>
+    </div>
+    <p class="max-w-xl text-sm leading-7 text-observatory-muted">
+      Vigil now treats NASA as the baseline, not the final word. The roadmap is to preserve provenance, compare catalogues, and show when a planet is stable, disputed, or under-measured.
+    </p>
+  </div>
+
+  <div class="overflow-x-auto border border-observatory-line-soft bg-observatory-panel/80">
+    <table class="w-full min-w-[880px] border-collapse text-left text-xs">
+      <thead class="bg-white/[0.025] text-observatory-dim">
+        <tr>
+          <th class="border-b border-observatory-line-soft p-3 uppercase tracking-widest">Source</th>
+          <th class="border-b border-observatory-line-soft p-3 uppercase tracking-widest">Best use</th>
+          <th class="border-b border-observatory-line-soft p-3 uppercase tracking-widest">Status</th>
+          <th class="border-b border-observatory-line-soft p-3 uppercase tracking-widest">Why it matters</th>
+        </tr>
+      </thead>
+      <tbody>
+        {sources.map((source) => (
+          <tr class="text-observatory-text">
+            <td class="border-b border-observatory-line-soft p-3 text-observatory-white">{source.name}</td>
+            <td class="border-b border-observatory-line-soft p-3">{source.role}</td>
+            <td class="border-b border-observatory-line-soft p-3">
+              <span class={source.status === 'Active source' ? 'text-status-teal' : 'text-status-amber'}>{source.status}</span>
+            </td>
+            <td class="border-b border-observatory-line-soft p-3">{source.effect}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-5 grid gap-4 md:grid-cols-3">
+    <div class="border border-observatory-line-soft bg-observatory-panel/80 p-4">
+      <h3 class="font-serif text-lg font-bold text-observatory-white">NASA-only winner</h3>
+      <p class="mt-2 text-sm leading-7 text-observatory-muted">The current ranking: strict, confirmed and reproducible from one trusted baseline.</p>
+    </div>
+    <div class="border border-observatory-line-soft bg-observatory-panel/80 p-4">
+      <h3 class="font-serif text-lg font-bold text-observatory-white">Merged confirmed winner</h3>
+      <p class="mt-2 text-sm leading-7 text-observatory-muted">Future ranking after aliases, host-star values and catalogue disagreements are reconciled.</p>
+    </div>
+    <div class="border border-observatory-line-soft bg-observatory-panel/80 p-4">
+      <h3 class="font-serif text-lg font-bold text-observatory-white">Wildcard candidate</h3>
+      <p class="mt-2 text-sm leading-7 text-observatory-muted">A planet that could rise if missing mass, atmosphere, stellar or observability values are filled.</p>
+    </div>
+  </div>
+</section>
