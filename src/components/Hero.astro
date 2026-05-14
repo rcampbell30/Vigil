@@ -8,26 +8,32 @@ const { siteMeta } = Astro.props;
 
 <header class="border-b border-observatory-line-soft py-16">
   <div class="mx-auto max-w-6xl px-5">
-    <p class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-status-teal mb-4">
-      <span class="w-2 h-2 bg-status-teal rounded-full shadow-lg" style="box-shadow: 0 0 22px rgba(58, 247, 181, 0.55);"></span>
+    <p class="mb-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-status-teal">
+      <span class="h-2 w-2 rounded-full bg-status-teal shadow-lg" style="box-shadow: 0 0 22px rgba(58, 247, 181, 0.55);" aria-hidden="true"></span>
       Exoplanet Habitability Index / SETI Targeting
     </p>
     
-    <div class="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-16 items-end">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-16 md:items-end">
       <div class="md:col-span-2">
-        <h1 class="font-serif text-4xl md:text-5xl font-bold text-observatory-white mb-4 leading-tight">
-          Vigil —<br /><em class="text-status-teal italic">The Long Watch.</em>
+        <h1 class="mb-4 font-serif text-4xl font-bold leading-tight text-observatory-white md:text-6xl">
+          Vigil —<br /><em class="italic text-status-teal">The Long Watch.</em>
         </h1>
-        <p class="font-serif text-base text-observatory-text leading-relaxed max-w-2xl">
-          Vigil ranks confirmed exoplanets by evidence-adjusted habitability.
-          Unknown values reduce confidence. Hostile physics caps the score.
-          Nearby, well-measured, survivable worlds rise.
+        <p class="max-w-2xl font-serif text-base leading-relaxed text-observatory-text md:text-lg">
+          Vigil ranks confirmed exoplanets by evidence-adjusted habitability and long-watch SETI value.
+          Unknown values reduce confidence. Hostile physics caps the score. Nearby, well-measured, survivable worlds rise.
         </p>
+        <div class="mt-7 flex flex-wrap gap-3 text-xs uppercase tracking-widest text-observatory-muted">
+          <a href="#targets" class="border border-observatory-line-soft px-4 py-3 text-observatory-text hover:border-status-teal hover:text-status-teal focus:outline-none focus:ring-2 focus:ring-status-teal">View target dossiers</a>
+          <a href="#methodology" class="border border-observatory-line-soft px-4 py-3 text-observatory-text hover:border-status-teal hover:text-status-teal focus:outline-none focus:ring-2 focus:ring-status-teal">Scoring method</a>
+        </div>
       </div>
       
-      <div class="border border-observatory-line-soft bg-gradient-to-b from-observatory-panel-2 to-observatory-panel p-4 rounded shadow-lg">
-        <span class="block text-xs font-bold uppercase tracking-widest text-observatory-dim mb-2">Current source</span>
-        <strong class="block text-observatory-white text-sm">{siteMeta.source || 'Loading...'}</strong>
+      <div class="border border-observatory-line-soft bg-gradient-to-b from-observatory-panel-2 to-observatory-panel p-5 shadow-lg">
+        <span class="mb-2 block text-xs font-bold uppercase tracking-widest text-observatory-dim">Current baseline source</span>
+        <strong class="block text-sm text-observatory-white">{siteMeta.source || 'Loading...'}</strong>
+        <p class="mt-4 text-xs leading-6 text-observatory-muted">
+          NASA is the active baseline. The source layer is prepared for Open Exoplanet Catalogue, Extrasolar Planets Encyclopaedia, SIMBAD/CDS, VizieR, Gaia and specialist rocky-HZ comparisons.
+        </p>
       </div>
     </div>
   </div>
