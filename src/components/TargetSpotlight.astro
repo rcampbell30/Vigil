@@ -1,0 +1,76 @@
+---
+interface Props {
+  topPlanet: any;
+  safestPlanet: any;
+  nearestPlanet: any;
+  wildcardPlanet: any;
+}
+
+const { topPlanet, safestPlanet, nearestPlanet, wildcardPlanet } = Astro.props;
+
+const fmtScore = (score: number | null | undefined, digits = 2) =>
+  score === null || score === undefined ? 'N/A' : Number(score).toFixed(digits);
+
+const fmtDistance = (distance: number | null | undefined) =>
+  distance === null || distance === undefined ? 'unknown' : `${Number(distance).toFixed(1)} pc`;
+
+const hasRisk = (planet: any) => planet?.risk_flags && planet.risk_flags !== 'none';
+
+const cards = [
+  {
+    label: 'Current winner',
+    planet: topPlanet,
+    value: fmtScore(topPlanet?.composite_score),
+    body: 'Highest evidence-adjusted Vigil score after confidence penalties and physical guardrails.',
+  },
+  {
+    label: 'Cleanest top candidate',
+    planet: safestPlanet,
+    value: safestPlanet ? fmtScore(safestPlanet.composite_score) : 'N/A',
+    body: 'Highest-ranked world in the current export without a major risk flag.',
+  },
+  {
+    label: 'Closest serious target',
+    planet: nearestPlanet,
+    value: nearestPlanet ? fmtDistance(nearestPlanet.sy_dist_pc) : 'N/A',
+    body: 'Distance matters for SETI and follow-up. The nearest serious candidate may not be the winner.',
+  },
+  {
+    label: 'Wildcard watch',
+    planet: wildcardPlanet,
+    value: wildcardPlanet ? fmtScore(wildcardPlanet.composite_score) : 'N/A',
+    body: 'A promising candidate where missing data, risk flags, or source disagreement could change the ranking.',
+  },
+];
+---
+
+<section class="mx-auto max-w-6xl px-5 py-8" aria-labelledby="mission-brief-title">
+  <div class="mb-5 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <p class="text-xs font-bold uppercase tracking-widest text-status-teal">Mission control brief</p>
+      <h2 id="mission-brief-title" class="mt-2 font-serif text-3xl font-bold text-observatory-white">The result is not one answer. It is four useful lenses.</h2>
+    </div>
+    <p class="max-w-xl text-sm leading-7 text-observatory-muted">
+      Vigil separates the best current score from the cleanest evidence case, the closest practical target, and the wildcard that may move when more catalogues fill missing values.
+    </p>
+  </div>
+
+  <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+    {cards.map((card) => (
+      <article class="min-h-[235px] border border-observatory-line-soft bg-gradient-to-b from-observatory-panel-2 to-observatory-panel p-5 shadow-xl">
+        <span class="text-[10px] font-bold uppercase tracking-widest text-observatory-dim">{card.label}</span>
+        <h3 class="mt-3 font-serif text-xl font-bold text-observatory-white">{card.planet?.pl_name || 'Not available'}</h3>
+        <p class="mt-1 text-xs text-observatory-muted">
+          {card.planet?.hostname ? `Host: ${card.planet.hostname}` : 'Awaiting data'}
+        </p>
+        <div class="mt-5 inline-flex border border-status-teal/30 bg-status-teal/10 px-3 py-2 text-status-teal">
+          <span class="text-xs uppercase tracking-widest">{card.value}</span>
+        </div>
+        <p class="mt-4 text-sm leading-7 text-observatory-text">{card.body}</p>
+        {card.planet && hasRisk(card.planet) && (
+          <p class="mt-3 border-l-2 border-status-amber pl-3 text-xs leading-6 text-status-amber">{card.planet.risk_flags}</p>
+        )}
+      </article>
+    ))}
+  </div>
+</section>
